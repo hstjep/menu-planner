@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import Header from './components/Header/Header';
 import { BrowserRouter as Router, Switch, Route, hashHistory } from 'react-router-dom';
 import { Index, Food, FoodCreate } from './views/views';
+import styles from './app.css';
 
 class App extends React.Component {  
 	
@@ -9,7 +10,7 @@ class App extends React.Component {
 	  return (
 		<div className="container-fluid">
 			<Router history={hashHistory}>
-		  	<div>
+		  	<div className={styles.wrapper}>
 					<Header/>
 					<switch>
 						<Route exact path="/" component={Index}/>

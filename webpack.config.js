@@ -23,6 +23,10 @@ module.exports = {
 		net: 'empty'
   },
   resolve: {
+    modules: [
+      path.resolve('./app'),
+      path.resolve('./node_modules')
+    ],
     extensions: ['.js', '.jsx'],
     plugins: [
       new DirectoryNamedWebpackPlugin()      
@@ -39,6 +43,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
+        include: paths.appSrc,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {

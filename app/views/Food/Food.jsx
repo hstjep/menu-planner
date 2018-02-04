@@ -1,46 +1,46 @@
 import React, { PureComponent } from "react";
-import { Link, Route } from 'react-router-dom';
-import FoodList from '../../components/food/FoodList';
-import { Bootstrap, Well } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { getFoodItems, deleteFoodItem } from "actions/foodActions";
+import FoodList from 'components/food/FoodList';
+import { Well, PageHeader, Button } from 'react-bootstrap';
 
 class Food extends PureComponent {
   state = {
     foodItems: undefined,
     foodItemsAreLoading: false,
-    isDeleteModalOpen: false
+    isDeleteModalOpen: {}
   };
 
   handleUpdateState = newState => {
     this.setState(newState);
   };
 
-  componentDidMount() {
-    this.handleUpdateState({ foodItemsAreLoading: true });
+  handleFoodItemDelete = (id) => {
+    deleteFoodItem(id, this.handleUpdateState);
+  }
 
-    fetch('/api/food')
-      .then(response => response.json())
-      .then(foodItems => {
-        this.handleUpdateState({ foodItems, foodItemsAreLoading: false })
-      }
-      );
+  componentDidMount() {
+    getFoodItems(this.handleUpdateState);
   }
 
   render() {
     const { foodItems, foodItemsAreLoading, isDeleteModalOpen } = this.state;
     const match = this.props.match;
-    
+
     return (
       <div>
-        <Well bsSize="small"><h2>Food List</h2></Well>
-        <ul>
-          <li>
-            <Link to={`${match.url}/create`}>
-              Create Food
-              </Link>
-          </li>
-        </ul>
-        <FoodList foodItems={foodItems} foodItemsAreLoading={foodItemsAreLoading} 
-        handleUpdateState={this.handleUpdateState} />
+        {/* <Well bsSize="small"><h3>Food</h3></Well> */}
+        <PageHeader>
+          <small>Food</small>
+        </PageHeader>
+        <LinkContainer to={`${match.url}/create`}>
+          <Button bsStyle="primary" bsSize="small"><span className="glyphicon glyphicon-plus"/> Create New</Button>
+        </LinkContainer>
+        <FoodList
+          {...this.state}
+          handleUpdateState={this.handleUpdateState}
+          handleFoodItemDelete={this.handleFoodItemDelete}
+        />
       </div>
     );
   }

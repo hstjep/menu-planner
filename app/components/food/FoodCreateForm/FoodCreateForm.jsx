@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Loader from "../../common/Loader";
+import Loader from "components/common/Loader";
 import { Bootstrap, Button, Grid, Row, Col } from 'react-bootstrap';
 
 class FoodCreateForm extends Component {

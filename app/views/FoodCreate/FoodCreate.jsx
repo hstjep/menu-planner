@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Link, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
+import { createFoodItem, updateFoodItem } from "../../actions/foodActions";
 import FoodCreateForm from '../../components/food/FoodCreateForm';
 
 class FoodCreate extends PureComponent {
@@ -16,6 +17,7 @@ class FoodCreate extends PureComponent {
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.redirectToFoodList = this.redirectToFoodList.bind(this);
 	}
 
 
@@ -50,34 +52,21 @@ class FoodCreate extends PureComponent {
 	}
 
 	handleSubmit(event) {
-		const newFood = this.state.foodItem;
+		const newFoodItem = this.state.foodItem;
 		const id = this.props.match.params.id;
 
 		var promise = undefined;
 		if (id) {
-			promise = fetch('/api/food/' + id, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(newFood)
-			});
+			updateFoodItem(id, newFoodItem, this.redirectToFoodList);
 		} else {
-			promise = fetch('/api/food', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(newFood)
-			});
+			createFoodItem(newFoodItem, this.redirectToFoodList);
 		}
-
-		promise.then(response => {
-			response.json();
-			this.props.history.push('/food');
-		})
-
+		
 		event.preventDefault();
+	}
+
+	redirectToFoodList() {
+		this.props.history.push('/food');
 	}
 
 	render() {

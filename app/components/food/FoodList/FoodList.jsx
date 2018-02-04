@@ -1,19 +1,20 @@
 import React, { Component } from 'react';  
-import FoodItem from '../FoodItem';
+import FoodItem from 'components/food/FoodItem';
+import Loader from "components/common/Loader";
 import { Table } from 'react-bootstrap';
-import Loader from "../../common/Loader";
+import styles from './foodList.css'; 
 
 
 class FoodList extends Component {
   render() { 
-    const { foodItems, foodItemsAreLoading, handleUpdateState } = this.props;
-    
+    const { foodItems, foodItemsAreLoading, handleFoodItemDelete, handleUpdateState, isDeleteModalOpen } = this.props;
+
     if (foodItemsAreLoading) return <Loader />
     if (!foodItems) return null;
 
     return (
-      <div>
-        <Table responsive striped bordered condensed hover>
+      <div className={styles.section}>
+        <Table responsive striped condensed hover>
           <thead>
             <tr>
               <th>Title</th>
@@ -22,8 +23,13 @@ class FoodList extends Component {
               <th></th>
             </tr>
           </thead>
-          <tbody>{foodItems.map(foodItem => <FoodItem key={foodItem._id} item={foodItem} 
-          handleUpdateState={handleUpdateState} />)}</tbody>
+          <tbody>{foodItems.map(foodItem => <FoodItem 
+            key={foodItem._id} 
+            item={foodItem} 
+            isDeleteModalOpen={isDeleteModalOpen}
+            handleUpdateState={handleUpdateState} 
+            handleFoodItemDelete={handleFoodItemDelete} 
+          />)}</tbody>
         </Table>
     </div>)
   }
