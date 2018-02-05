@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { getFoodItem, createFoodItem, updateFoodItem } from "../../actions/foodActions";
 import FoodCreateForm from '../../components/food/FoodCreateForm';
+import { PageHeader } from 'react-bootstrap';
 
 class FoodCreate extends PureComponent {
 	constructor(props) {
@@ -52,7 +53,7 @@ class FoodCreate extends PureComponent {
 		} else {
 			createFoodItem(newFoodItem, this.redirectToFoodList);
 		}
-		
+
 		event.preventDefault();
 	}
 
@@ -66,9 +67,9 @@ class FoodCreate extends PureComponent {
 
 		return (
 			<div>
-				<h1>
-					{match.params.id ? 'Edit' : 'Create'} food
-      </h1>
+				<PageHeader>
+					<small>{match.params.id ? 'Edit' : 'Create'} food</small>
+				</PageHeader>
 				<FoodCreateForm foodItem={foodItem} foodItemIsLoading={foodItemIsLoading}
 					handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange} />
 			</div>

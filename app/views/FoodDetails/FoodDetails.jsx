@@ -18,8 +18,6 @@ class FoodDetails extends PureComponent {
 		const id = this.props.match.params.id;
 
 		if (id) {
-			this.handleUpdateState({ foodItemIsLoading: true });
-
 			getFoodItem(id, this.handleUpdateState);
 		}
 	}

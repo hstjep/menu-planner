@@ -10,6 +10,8 @@ const getFoodItems = (updateStateCallback) => {
 };
 
 const getFoodItem = (id, updateStateCallback) => {
+	updateStateCallback({ foodItemIsLoading: true });
+
 	fetch('/api/food/' + id)
 		.then(response => response.json())
 		.then(foodItem => {

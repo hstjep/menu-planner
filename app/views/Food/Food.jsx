@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { LinkContainer } from 'react-router-bootstrap';
 import { getFoodItems, deleteFoodItem } from "actions/foodActions";
 import FoodList from 'components/food/FoodList';
-import { Well, PageHeader, Button } from 'react-bootstrap';
+import { PageHeader, Button } from 'react-bootstrap';
 
 class Food extends PureComponent {
   state = {
@@ -29,7 +29,6 @@ class Food extends PureComponent {
 
     return (
       <div>
-        {/* <Well bsSize="small"><h3>Food</h3></Well> */}
         <PageHeader>
           <small>Food</small>
         </PageHeader>
