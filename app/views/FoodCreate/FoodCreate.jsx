@@ -38,7 +38,6 @@ class FoodCreate extends PureComponent {
 				}
 				);
 		}
-
 	}
 
 	handleInputChange(event) {

@@ -9,6 +9,15 @@ const getFoodItems = (updateStateCallback) => {
 		);
 };
 
+const getFoodItem = (id, updateStateCallback) => {
+	fetch('/api/food/' + id)
+		.then(response => response.json())
+		.then(foodItem => {
+			updateStateCallback({ foodItem, foodItemIsLoading: false })
+		}
+		);
+};
+
 const createFoodItem = (foodItem, callback) => {
 	fetch('/api/food', {
 		method: 'POST',
@@ -44,4 +53,4 @@ const deleteFoodItem = (id, updateStateCallback) => {
 		);
 };
 
-export { getFoodItems, createFoodItem, updateFoodItem, deleteFoodItem };
+export { getFoodItems, getFoodItem, createFoodItem, updateFoodItem, deleteFoodItem };

@@ -4,21 +4,23 @@ import { Bootstrap, Modal, Button } from 'react-bootstrap';
 class ConfirmDelete extends React.Component {
 
 	render() {
-		if (!this.props.show) {
+		const { show, onClose, onConfirm, item, message } = this.props;
+
+		if (!show) {
 			return null;
 		}
 		return (
 			<div className="static-modal">
 			<Modal.Dialog>
 				<Modal.Header>
-					<Modal.Title>Are you sure you want to delete this item?</Modal.Title>
+					<Modal.Title>{message}</Modal.Title>
 				</Modal.Header>
 	
-				<Modal.Body>One fine body...</Modal.Body>
+				{/* <Modal.Body></Modal.Body> */}
 	
 				<Modal.Footer>
-					<Button onClick={this.props.onClose}>Cancel</Button>
-					<Button onClick={() => this.props.onConfirm(this.props.item)} bsStyle="primary">Yes</Button>
+					<Button onClick={onClose}>Cancel</Button>
+					<Button onClick={() => onConfirm(item)} bsStyle="primary">Yes</Button>
 				</Modal.Footer>
 			</Modal.Dialog>
 			</div>

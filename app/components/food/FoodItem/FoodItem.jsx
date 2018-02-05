@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './foodItem.css';
 import { Button, ButtonGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import ConfirmDelete from "components/common/ConfirmDelete";
+import ConfirmModal from "components/common/ConfirmModal";
 
 class FoodItem extends React.Component {
   constructor() {
@@ -51,10 +51,12 @@ class FoodItem extends React.Component {
               <Button bsStyle="danger" onClick={this.handleDeleteConfirmToggle} href="javascript:void(0)"><span className="glyphicon glyphicon-remove" /></Button>
             </OverlayTrigger>
           </ButtonGroup>
-          <ConfirmDelete
+          <ConfirmModal
             show={isDeleteModalOpen[item._id]}
             onClose={this.handleDeleteConfirmToggle}
             onConfirm={this.handleDeleteConfirm}
+            item={item}
+            message={"Are you sure you want to delete " + item.title + "?"}
           />
         </th>
       </tr>
