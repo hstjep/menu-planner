@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Link, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
-import { createFoodItem, updateFoodItem } from "../../actions/foodActions";
+import { getFoodItem, createFoodItem, updateFoodItem } from "../../actions/foodActions";
 import FoodCreateForm from '../../components/food/FoodCreateForm';
 
 class FoodCreate extends PureComponent {
@@ -27,16 +27,8 @@ class FoodCreate extends PureComponent {
 
 	componentDidMount() {
 		const id = this.props.match.params.id;
-
 		if (id) {
-			this.handleUpdateState({ foodItemIsLoading: true });
-
-			fetch('/api/food/' + id)
-				.then(response => response.json())
-				.then(foodItem => {
-					this.handleUpdateState({ foodItem, foodItemIsLoading: false })
-				}
-				);
+			getFoodItem(id, this.handleUpdateState);
 		}
 	}
 

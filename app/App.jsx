@@ -12,13 +12,13 @@ class App extends React.Component {
 			<Router history={hashHistory}>
 		  	<div className={styles.wrapper}>
 					<Header/>
-					<switch>
+					<Switch>
 						<Route exact path="/" component={Index}/>
 						<Route exact path="/food" component={Food}/>
-						<Route exact path="/food/:id" component={FoodDetails}/>
 						<Route exact path="/food/create" component={FoodCreate}/>
+						<Route exact path="/food/:id" component={FoodDetails}/>
 						<Route exact path="/food/edit/:id" component={FoodCreate}/>
-					</switch>
+					</Switch>
 			</div>
 			</Router>
 		</div>
