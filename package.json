@@ -2,10 +2,11 @@
   "name": "menu-plan",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "start:client": "webpack-dev-server",
-    "start:server": "tsc && webpack --config webpack.config.server.js",
+    "start:server": "concurrently --kill-others \"tsc -w\" \"nodemon build/index.js\"",
+    "build:server": "webpack --config webpack.config.server.js",
     "start": "npm-run-all --parallel start:server start:client"
   },
   "proxy": {
@@ -28,11 +29,13 @@
     "react-dom": "^15.4.2",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.2.2",
-    "save-dev": "^2.0.0"
+    "save-dev": "^2.0.0",
+    "multer": "^1.3.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
     "@types/webpack-env": "^1.13.2",
+    "awesome-typescript-loader": "^3.4.1",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
     "babel-polyfill": "^6.23.0",
@@ -41,16 +44,25 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
+    "chokidar": "^2.0.2",
+    "concurrently": "^3.5.1",
     "css-loader": "^0.28.8",
     "directory-named-webpack-plugin": "^2.3.0",
     "html-webpack-plugin": "^2.30.1",
+    "nodemon": "^1.15.1",
+    "nodemon-webpack-plugin": "^0.1.6",
     "npm-run-all": "^4.1.1",
+    "react-dev-utils": "^5.0.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "start-server-webpack-plugin": "^2.2.0",
     "style-loader": "^0.19.1",
+    "ts-node": "^5.0.1",
     "typescript": "^2.6.1",
-    "webpack": "^2.2.1",
+    "webpack": "^3.0.0",
     "webpack-dev-server": "^2.4.1",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-hot-middleware": "^2.21.0",
+    "webpack-node-externals": "^1.6.0",
+    "webpack-nodemon-plugin": "^0.1.0",
+    "webpack-shell-plugin": "^0.5.0"
   }
 }

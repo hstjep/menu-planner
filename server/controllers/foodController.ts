@@ -1,6 +1,6 @@
-var foodService = require('../services/foodService');
+import foodService from '../services/foodService';
 
-export = module.exports = {
+export default {
 	get: get,
 	getById: getById,
 	create: create,

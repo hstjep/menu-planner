@@ -1,5 +1,5 @@
 import * as express from 'express';
-import foodCtrl = require('../controllers/foodController');
+import foodCtrl from '../controllers/foodController';
 var router = express.Router();
 
 // GET food.

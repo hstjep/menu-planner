@@ -1,8 +1,7 @@
-import * as express from "express";
+var express = require("express");
 const app = express();
 var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
-
 
 
 mongoose.connect('mongodb://localhost/menu-plan', function (err, res) {
@@ -12,7 +11,10 @@ mongoose.connect('mongodb://localhost/menu-plan', function (err, res) {
     console.log ('Successfully connected to db.');
   }
 });
+
+
 var food = require('./routes/food');
+var file = require('./routes/file');
 const path = require('path');
 
 // app.get('/*', function(req, res) {   
@@ -34,9 +36,10 @@ app.get('/', function(req, res) {
 .use(express.static(__dirname + './../app'))
 
 app.get("/api", (req, res) => {
-    res.send({ message: "I am a server route and can also be hot reloaded!" });
+    res.send({ message: "Server route!" });
 });
 
 app.use('/api/food', food);
+app.use('/api/file', file);
 
 export default app;

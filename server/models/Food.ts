@@ -4,11 +4,13 @@ var Schema = mongoose.Schema;
 
 // Mongoose schema definition.
 var foodSchema = new Schema({
-	title: { type: String, required: true }
+	title: { type: String, required: true },
+	description: { type: String },
+	imageUrl: { type: String }
 });
 
 // Interfaces that extend mongoose documents.
 interface IFoodModel extends IFood, mongoose.Document { }
 
-module.exports = mongoose.model<IFoodModel>('Food', foodSchema, 'food');
+export default mongoose.model<IFoodModel>('Food', foodSchema, 'food');
 

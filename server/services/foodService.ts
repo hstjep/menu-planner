@@ -1,6 +1,6 @@
-var Food = require('../models/Food');
+import Food from '../models/Food';
 
-export = module.exports = {
+export default {
 	get: get,
 	getById: getById,
 	create: create,
