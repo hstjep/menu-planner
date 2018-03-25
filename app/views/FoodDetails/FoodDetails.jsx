@@ -25,9 +25,7 @@ class FoodDetails extends PureComponent {
 	render() {
 		const match = this.props.match;
 		const { foodItem, foodItemIsLoading } = this.state;
-
 		if (!foodItem || foodItemIsLoading) return <Loader />
-
 		return (
 			<div>
 				<PageHeader>
@@ -42,6 +40,8 @@ class FoodDetails extends PureComponent {
 
 					<dt>Subcategory</dt>
 					<dd>{foodItem.subcategory}</dd>
+
+					<dd><img src={foodItem.imageUrl} /></dd>
 				</dl>
 			</div>
 		);

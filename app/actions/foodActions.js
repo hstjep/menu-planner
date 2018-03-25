@@ -11,7 +11,6 @@ const getFoodItems = (updateStateCallback) => {
 
 const getFoodItem = (id, updateStateCallback) => {
 	updateStateCallback({ foodItemIsLoading: true });
-
 	fetch('/api/food/' + id)
 		.then(response => response.json())
 		.then(foodItem => {
@@ -21,6 +20,10 @@ const getFoodItem = (id, updateStateCallback) => {
 };
 
 const createFoodItem = (foodItem, callback) => {
+	if (foodItem.imageUrl) {
+		foodItem.imageUrl = '/' + foodItem.imageUrl.replace(/\\/g, "/");
+	}
+
 	fetch('/api/food', {
 		method: 'POST',
 		headers: {

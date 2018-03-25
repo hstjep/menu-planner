@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { Link, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { getFoodItem, createFoodItem, updateFoodItem } from "../../actions/foodActions";
+import { uploadFile } from "../../actions/fileActions";
 import FoodCreateForm from '../../components/food/FoodCreateForm';
 import { PageHeader } from 'react-bootstrap';
 
@@ -11,12 +12,15 @@ class FoodCreate extends PureComponent {
 
 		this.state = {
 			foodItem: {
-				title: ''
-				// description: ''
+				title: '',
+				imageUrl: '',
+				description: ''
 			},
-			foodItemIsLoading: false
+			foodItemIsLoading: false,
+			fileInput: undefined
 		};
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleImageClear = this.handleImageClear.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.redirectToFoodList = this.redirectToFoodList.bind(this);
 	}
@@ -35,26 +39,57 @@ class FoodCreate extends PureComponent {
 
 	handleInputChange(event) {
 		const target = event.target;
-		const value = target.value;
-		const name = target.name;
 
+		if (target.files && target.files.length > 0) {
+			this.setState({
+				fileInput: target.files[0]
+			});
+		} else {
+			const value = target.value;
+			const name = target.name;
+
+			this.setState({
+				foodItem: { ...this.state.foodItem, [name]: value }
+			});
+		}
+	}
+
+	handleImageClear() {
 		this.setState({
-			foodItem: { [name]: value }
+			fileInput: undefined
 		});
 	}
 
 	handleSubmit(event) {
-		const newFoodItem = this.state.foodItem;
+		const image = this.state.fileInput;
 		const id = this.props.match.params.id;
 
-		var promise = undefined;
-		if (id) {
-			updateFoodItem(id, newFoodItem, this.redirectToFoodList);
-		} else {
-			createFoodItem(newFoodItem, this.redirectToFoodList);
+		let promises = [];
+
+		if (image) {
+			// uploadFile(image, this.redirectToFoodList);
+			promises.push(uploadFile(image, this.redirectToFoodList));
 		}
 
-		event.preventDefault();
+		var that = this;
+		Promise.all(promises).then(function (data) {
+			that.setState({
+				foodItem: {
+					...that.state.foodItem,
+					imageUrl: data[0].path
+				}
+			});
+
+			const newFoodItem = that.state.foodItem;
+
+		if (id) {
+			updateFoodItem(id, newFoodItem, that.redirectToFoodList);
+		} else {
+			createFoodItem(newFoodItem, that.redirectToFoodList);
+		}
+	})
+
+	event.preventDefault();
 	}
 
 	redirectToFoodList() {
@@ -63,7 +98,7 @@ class FoodCreate extends PureComponent {
 
 	render() {
 		const match = this.props.match;
-		const { foodItem, foodItemIsLoading } = this.state;
+		const { foodItem, fileInput, foodItemIsLoading } = this.state;
 
 		return (
 			<div>
@@ -71,7 +106,8 @@ class FoodCreate extends PureComponent {
 					<small>{match.params.id ? 'Edit' : 'Create'} food</small>
 				</PageHeader>
 				<FoodCreateForm foodItem={foodItem} foodItemIsLoading={foodItemIsLoading}
-					handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange} />
+					handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange}
+					fileInput={fileInput} handleImageClear={this.handleImageClear}/>
 			</div>
 		);
 	}
