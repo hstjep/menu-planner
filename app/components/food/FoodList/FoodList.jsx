@@ -7,7 +7,7 @@ import styles from './foodList.css';
 
 class FoodList extends Component {
   render() { 
-    const { foodItems, foodItemsAreLoading, handleFoodItemDelete, handleUpdateState, isDeleteModalOpen } = this.props;
+    const { foodItems, foodItemsAreLoading, handleDeleteConfirmToggle, handleFoodItemDelete, isDeleteModalOpen } = this.props;
 
     if (foodItemsAreLoading) return <Loader />
     if (!foodItems) return null;
@@ -27,7 +27,7 @@ class FoodList extends Component {
             key={foodItem._id} 
             item={foodItem} 
             isDeleteModalOpen={isDeleteModalOpen}
-            handleUpdateState={handleUpdateState} 
+            handleDeleteConfirmToggle={handleDeleteConfirmToggle}
             handleFoodItemDelete={handleFoodItemDelete} 
           />)}</tbody>
         </Table>

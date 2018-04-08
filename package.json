@@ -30,6 +30,9 @@
     "react-dom": "^15.4.2",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.2.2",
+    "redux-actions": "^2.3.0",
+    "redux-define": "^1.1.1",
+    "redux-form": "^7.3.0",
     "save-dev": "^2.0.0"
   },
   "devDependencies": {
@@ -55,7 +58,10 @@
     "npm-run-all": "^4.1.1",
     "react-dev-utils": "^5.0.0",
     "react-hot-loader": "^3.0.0-beta.6",
+    "react-redux": "^5.0.7",
     "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
     "start-server-webpack-plugin": "^2.2.0",
     "style-loader": "^0.19.1",
     "ts-node": "^5.0.1",

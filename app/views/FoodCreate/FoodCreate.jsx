@@ -1,10 +1,18 @@
 import React, { PureComponent } from "react";
+import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { getFoodItem, createFoodItem, updateFoodItem } from "../../actions/foodActions";
 import { uploadFile } from "../../actions/fileActions";
 import FoodCreateForm from '../../components/food/FoodCreateForm';
 import { PageHeader } from 'react-bootstrap';
+
+const mapDispatchToProps = dispatch => {
+	return {
+		createFoodItem: (foodItem, callback) => dispatch(createFoodItem(foodItem, callback)),
+		updateFoodItem: (foodItem, callback) => dispatch(updateFoodItem(foodItem, callback))
+	};
+};
 
 class FoodCreate extends PureComponent {
 	constructor(props) {
@@ -63,11 +71,11 @@ class FoodCreate extends PureComponent {
 	handleSubmit(event) {
 		const image = this.state.fileInput;
 		const id = this.props.match.params.id;
+		const { updateFoodItem, createFoodItem } = this.props;
 
 		let promises = [];
 
 		if (image) {
-			// uploadFile(image, this.redirectToFoodList);
 			promises.push(uploadFile(image, this.redirectToFoodList));
 		}
 
@@ -76,20 +84,20 @@ class FoodCreate extends PureComponent {
 			that.setState({
 				foodItem: {
 					...that.state.foodItem,
-					imageUrl: data[0].path
+					imageUrl: data && data[0] ? data[0].path : ''
 				}
 			});
 
 			const newFoodItem = that.state.foodItem;
 
-		if (id) {
-			updateFoodItem(id, newFoodItem, that.redirectToFoodList);
-		} else {
-			createFoodItem(newFoodItem, that.redirectToFoodList);
-		}
-	})
+			if (id) {
+				updateFoodItem(id, newFoodItem, that.redirectToFoodList);
+			} else {
+				createFoodItem(newFoodItem, that.redirectToFoodList);
+			}
+		})
 
-	event.preventDefault();
+		event.preventDefault();
 	}
 
 	redirectToFoodList() {
@@ -107,10 +115,10 @@ class FoodCreate extends PureComponent {
 				</PageHeader>
 				<FoodCreateForm foodItem={foodItem} foodItemIsLoading={foodItemIsLoading}
 					handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange}
-					fileInput={fileInput} handleImageClear={this.handleImageClear}/>
+					fileInput={fileInput} handleImageClear={this.handleImageClear} />
 			</div>
 		);
 	}
 }
 
-export default FoodCreate;
+export default connect(null, mapDispatchToProps)(FoodCreate);

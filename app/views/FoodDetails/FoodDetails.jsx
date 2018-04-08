@@ -1,30 +1,31 @@
 import React, { PureComponent } from "react";
+import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import { getFoodItem } from "actions/foodActions";
 import Loader from "components/common/Loader";
 import { PageHeader, Button } from 'react-bootstrap';
 
+const mapStateToProps = (state) => {
+  const { foodItem, foodItemIsLoading } = state.foodDetails;
+
+  return {
+    foodItem,
+    foodItemIsLoading
+  }
+}
+
 class FoodDetails extends PureComponent {
-	state = {
-		foodItem: undefined,
-		foodItemIsLoading: false
-	};
-
-	handleUpdateState = newState => {
-		this.setState(newState);
-	};
-
 	componentDidMount() {
 		const id = this.props.match.params.id;
 
 		if (id) {
-			getFoodItem(id, this.handleUpdateState);
+			this.props.dispatch(getFoodItem(id));
 		}
 	}
 
 	render() {
 		const match = this.props.match;
-		const { foodItem, foodItemIsLoading } = this.state;
+		const { foodItem, foodItemIsLoading } = this.props;
 		if (!foodItem || foodItemIsLoading) return <Loader />
 		return (
 			<div>
@@ -48,4 +49,4 @@ class FoodDetails extends PureComponent {
 	}
 }
 
-export default FoodDetails;
+export default connect(mapStateToProps)(FoodDetails);

@@ -13,7 +13,7 @@ class FoodItem extends React.Component {
 
   handleDeleteConfirmToggle() {
     const id = this.props.item._id;
-    this.props.handleUpdateState({ isDeleteModalOpen: { [id]: !this.props.isDeleteModalOpen[id] } });
+    this.props.handleDeleteConfirmToggle(id);
   }
 
   handleDeleteConfirm() {
@@ -22,7 +22,7 @@ class FoodItem extends React.Component {
   }
 
   render() {
-    const { item, isDeleteModalOpen, handleFoodItemDelete } = this.props;
+    const { item, isDeleteModalOpen, handleDeleteConfirmToggle, handleFoodItemDelete } = this.props;
 
     return (
       <tr>

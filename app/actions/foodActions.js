@@ -1,61 +1,98 @@
-const getFoodItems = (updateStateCallback) => {
-	updateStateCallback({ foodItemsAreLoading: true });
+import { FETCH_FOOD, FETCH_FOOD_ITEM, CREATE_FOOD_ITEM, UPDATE_FOOD_ITEM, DELETE_FOOD_ITEM } from './../constants/actionTypes';
 
-	fetch('/api/food')
-		.then(response => response.json())
-		.then(foodItems => {
-			updateStateCallback({ foodItems, foodItemsAreLoading: false })
-		}
-		);
+const getFoodItems = () => {
+	return (dispatch) => {
+		dispatch({ type: FETCH_FOOD.PENDING });
+
+		fetch('/api/food')
+			.then(response => response.json())
+			.then(foodItems => dispatch({
+				type: FETCH_FOOD.SUCCESS,
+				data: foodItems
+			}))
+			.catch(error => dispatch({
+				type: FETCH_FOOD.ERROR
+			}))
+	}
 };
 
-const getFoodItem = (id, updateStateCallback) => {
-	updateStateCallback({ foodItemIsLoading: true });
-	fetch('/api/food/' + id)
-		.then(response => response.json())
-		.then(foodItem => {
-			updateStateCallback({ foodItem, foodItemIsLoading: false })
-		}
-		);
+const getFoodItem = (id) => {
+	return (dispatch) => {
+		dispatch({ type: FETCH_FOOD_ITEM.PENDING });
+
+		fetch('/api/food/' + id)
+			.then(response => response.json())
+			.then(foodItem => dispatch({
+				type: FETCH_FOOD_ITEM.SUCCESS,
+				data: foodItem
+			}))
+			.catch(error => dispatch({
+				type: FETCH_FOOD_ITEM.ERROR
+			}))
+	}
 };
 
 const createFoodItem = (foodItem, callback) => {
-	if (foodItem.imageUrl) {
-		foodItem.imageUrl = '/' + foodItem.imageUrl.replace(/\\/g, "/");
-	}
+	return (dispatch) => {
+		dispatch({ type: CREATE_FOOD_ITEM.PENDING });
 
-	fetch('/api/food', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(foodItem)
-	})
-		.then(response => {
-			callback()
-		});
+		if (foodItem.imageUrl) {
+			foodItem.imageUrl = '/' + foodItem.imageUrl.replace(/\\/g, "/");
+		}
+
+		fetch('/api/food', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(foodItem)
+		})
+			.then(response => {
+				// dispatch({ type: CREATE_FOOD_ITEM.SUCCESS });
+				callback()
+			})
+			.catch(error => dispatch({
+				type: CREATE_FOOD_ITEM.ERROR
+			}));
+	}
 };
 
 const updateFoodItem = (id, foodItem, callback) => {
-	fetch('/api/food/' + id, {
-		method: 'PUT',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(foodItem)
-	})
-		.then(response => {
-			callback()
-		});
+	return (dispatch) => {
+		dispatch({ type: UPDATE_FOOD_ITEM.PENDING });
+
+		fetch('/api/food/' + id, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(foodItem)
+		})
+			.then(response => {
+				dispatch({ type: UPDATE_FOOD_ITEM.SUCCESS });				
+				callback()
+			})
+			.catch(error => dispatch({
+				type: UPDATE_FOOD_ITEM.ERROR
+			}));
+	}
 };
 
 const deleteFoodItem = (id, updateStateCallback) => {
-	fetch('/api/food/' + id, {
-		method: 'DELETE'
-	})
-		.then(response =>
-			getFoodItems(updateStateCallback)
-		);
+	return (dispatch) => {
+		// dispatch({ type: DELETE_FOOD_ITEM.PENDING });
+
+		fetch('/api/food/' + id, {
+			method: 'DELETE'
+		})
+			.then(response =>
+				dispatch(getFoodItems())
+			// getFoodItems(updateStateCallback)
+			)
+			.catch(error =>
+				dispatch({ type: DELETE_FOOD_ITEM.ERROR })
+			);
+	}
 };
 
 export { getFoodItems, getFoodItem, createFoodItem, updateFoodItem, deleteFoodItem };
