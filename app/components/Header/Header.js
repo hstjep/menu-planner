@@ -17,9 +17,15 @@ const Header = (props) => {
             <IndexLinkContainer to="/">
               <NavItem eventKey={1}>Home</NavItem>
             </IndexLinkContainer>
-            <LinkContainer to="/food">
-              <NavItem eventKey={2}>Food</NavItem>
-            </LinkContainer>
+            <NavDropdown eventKey={3} title="Administration" id="nav-dropdown">
+              <LinkContainer to="/food">
+                <MenuItem eventKey={3.1}>Food</MenuItem>
+              </LinkContainer>
+              <LinkContainer to="/food-category">
+                <MenuItem eventKey={3.2}>Food Category</MenuItem>
+              </LinkContainer>
+              {/* <MenuItem divider /> */}
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

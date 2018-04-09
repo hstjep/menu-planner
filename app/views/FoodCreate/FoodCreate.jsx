@@ -9,6 +9,7 @@ import { PageHeader } from 'react-bootstrap';
 
 const mapDispatchToProps = dispatch => {
 	return {
+		dispatch,
 		createFoodItem: (foodItem, callback) => dispatch(createFoodItem(foodItem, callback)),
 		updateFoodItem: (foodItem, callback) => dispatch(updateFoodItem(foodItem, callback))
 	};
@@ -41,7 +42,7 @@ class FoodCreate extends PureComponent {
 	componentDidMount() {
 		const id = this.props.match.params.id;
 		if (id) {
-			getFoodItem(id, this.handleUpdateState);
+			this.props.dispatch(getFoodItem(id, this.handleUpdateState));
 		}
 	}
 

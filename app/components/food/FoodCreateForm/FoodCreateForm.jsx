@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loader from "components/common/Loader";
 import { Bootstrap, Button, Grid, Row, Col, Form, FormGroup, FormControl, ControlLabel, FieldGroup, Label } from 'react-bootstrap';
 import styles from "./foodCreateForm.css";
+import { Field, reduxForm } from 'redux-form';
 
 class FoodCreateForm extends Component {
 	render() {
@@ -14,7 +15,7 @@ class FoodCreateForm extends Component {
 					<Col componentClass={ControlLabel} sm={2}>
 						Name
 					</Col>
-					<Col sm={10}>
+					<Col sm={4}>
 						<FormControl name="title" type="text" value={foodItem.title} onChange={handleInputChange} placeholder="Name" />
 					</Col>
 				</FormGroup>
@@ -22,13 +23,13 @@ class FoodCreateForm extends Component {
 					<Col componentClass={ControlLabel} sm={2}>
 						Description
 					</Col>
-					<Col sm={10}>
+					<Col sm={4}>
 						<FormControl componentClass="textarea" name="description" value={foodItem.description} onChange={handleInputChange} placeholder="Description" />
 					</Col>
 				</FormGroup>
 				<FormGroup>
 				<Col componentClass={ControlLabel} sm={2}></Col>
-					<Col sm={10}>
+					<Col sm={4}>
 						<label htmlFor="image-upload" className={styles.customImageUpload}>
 							<span className="glyphicon glyphicon-cloud-upload"></span> Upload Image
 						</label>

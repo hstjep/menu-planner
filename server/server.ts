@@ -14,6 +14,7 @@ mongoose.connect('mongodb://localhost/menu-plan', function (err, res) {
 
 
 var food = require('./routes/food');
+var foodCategory = require('./routes/foodCategory');
 var file = require('./routes/file');
 const path = require('path');
 
@@ -29,7 +30,6 @@ const path = require('path');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 app.get('/', function(req, res) {
     res.render('./../app/index.ejs', {});
 })
@@ -40,6 +40,7 @@ app.get("/api", (req, res) => {
 });
 
 app.use('/api/food', food);
+app.use('/api/food-category', foodCategory);
 app.use('/api/file', file);
 
 export default app;
