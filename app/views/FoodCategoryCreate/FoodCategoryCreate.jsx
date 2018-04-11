@@ -7,71 +7,41 @@ import FoodCategoryCreateForm from '../../components/food-category/FoodCategoryC
 import { PageHeader } from 'react-bootstrap';
 
 const mapStateToProps = (state) => {
-  const { foodCategory, foodCategoryIsLoading, isDeleteModalOpen } = state.foodCategoryDetails;
+	const { foodCategory, foodCategoryIsLoading, isDeleteModalOpen } = state.foodCategory;
 
-  return {
-    foodCategory,
-    foodCategoryIsLoading,
-    isDeleteModalOpen
-  }
-}
-
-const mapDispatchToProps = dispatch => {
 	return {
-		dispatch,
-		createFoodCategory: (foodCategory, callback) => dispatch(createFoodCategory(foodCategory, callback)),
-		updateFoodCategory: (foodCategory, callback) => dispatch(updateFoodCategory(foodCategory, callback))
-	};
-};
+		foodCategory,
+		foodCategoryIsLoading,
+		isDeleteModalOpen
+	}
+}
 
 class FoodCategoryCreate extends PureComponent {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			foodCategory: {
-				title: ''
-			},
-			foodCategoryIsLoading: false
-		};
-		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.redirectToFoodCategoryList = this.redirectToFoodCategoryList.bind(this);
 	}
-
-	handleUpdateState = newState => {
-		this.setState(newState);
-	};
 
 	componentDidMount() {
 		const id = this.props.match.params.id;
 		if (id) {
 			this.props.dispatch(getFoodCategory(id));
+		} else {
+			
 		}
 	}
 
-	handleInputChange(event) {
-		const target = event.target;
-		const value = target.value;
-		const name = target.name;
-
-		this.setState({
-			foodCategory: { ...this.state.foodCategory, [name]: value }
-		});
-	}
-
-	handleSubmit(event) {
+	handleSubmit = values => {
 		const id = this.props.match.params.id;
-		const { updateFoodCategory, createFoodCategory } = this.props;
-		const newFoodCategory = that.state.foodCategory;
+		const { dispatch } = this.props;
 
 		if (id) {
-			updateFoodCategory(id, newFoodCategory, that.redirectToFoodCategoryList);
+			dispatch(updateFoodCategory(id, values, this.redirectToFoodCategoryList));
 		} else {
-			createFoodCategory(newFoodCategory, that.redirectToFoodCategoryList);
+			dispatch(createFoodCategory(values, this.redirectToFoodCategoryList));
 		}
-
-		event.preventDefault();
 	}
 
 	redirectToFoodCategoryList() {
@@ -80,7 +50,8 @@ class FoodCategoryCreate extends PureComponent {
 
 	render() {
 		const match = this.props.match;
-		const { foodCategory, foodCategoryIsLoading } = this.props;
+		const { foodCategory, foodCategoryIsLoading, isDeleteModalOpen } = this.props;
+		const initValues = this.props.match.params.id ? this.props.foodCategory : {};
 
 		return (
 			<div>
@@ -88,11 +59,11 @@ class FoodCategoryCreate extends PureComponent {
 					<small>{match.params.id ? 'Edit' : 'Create'} food category</small>
 				</PageHeader>
 				<FoodCategoryCreateForm foodCategory={foodCategory} foodCategoryIsLoading={foodCategoryIsLoading}
-					handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange}
+					onSubmit={this.handleSubmit} initialValues={initValues}
 				/>
 			</div>
 		);
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodCategoryCreate);
+export default connect(mapStateToProps)(FoodCategoryCreate);

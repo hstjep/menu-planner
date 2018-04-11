@@ -6,7 +6,7 @@ const initialState = {
 	foodItemIsLoading: false
 };
 
-const foodDetails = handleActions({
+const foodItem = handleActions({
 	[FETCH_FOOD_ITEM.PENDING]: (state) => ({
 		...state,
 		foodItemIsLoading: true
@@ -22,4 +22,4 @@ const foodDetails = handleActions({
 	})
 }, initialState);
 
-export default foodDetails;
+export default foodItem;

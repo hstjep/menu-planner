@@ -1,29 +1,26 @@
 import { handleActions, combineActions } from 'redux-actions';
-import { FETCH_FOOD_CATEGORIES, DELETE_FOOD_CATEGORY, TOGGLE_DELETE_CONFIRM } from './../../constants/actionTypes';
+import { FETCH_FOOD_CATEGORY } from './../../constants/actionTypes';
 
 const initialState = {
-		foodCategories: undefined,
-		foodCategoriesAreLoading: false,
-		isDeleteModalOpen: {}
+	foodCategory: {
+		title: ''
+	},
+	foodCategoryIsLoading: false
 };
 
 const foodCategory = handleActions({
-	[FETCH_FOOD_CATEGORIES.PENDING]: (state) => ({
+	[FETCH_FOOD_CATEGORY.PENDING]: (state) => ({
 		...state,
-		foodCategoriesAreLoading: true
+		foodCategoryIsLoading: true
 	}),
-	[FETCH_FOOD_CATEGORIES.SUCCESS]: (state, action) => ({
+	[FETCH_FOOD_CATEGORY.SUCCESS]: (state, action) => ({
 		...state,
-		foodCategories: action.data,
-		foodCategoriesAreLoading: false
+		foodCategory: action.data,
+		foodCategoryIsLoading: false
 	}),
-	[FETCH_FOOD_CATEGORIES.ERROR]: (state) => ({
+	[FETCH_FOOD_CATEGORY.ERROR]: (state) => ({
 		...state,
-		foodCategoriesAreLoading: false
-	}),
-	[TOGGLE_DELETE_CONFIRM] : (state, action) => ({
-		...state,
-		isDeleteModalOpen: { [action.value]: !state.isDeleteModalOpen[action.value]}
+		foodCategoryIsLoading: false
 	})
 }, initialState);
 

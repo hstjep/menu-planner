@@ -6,7 +6,7 @@ import Loader from "components/common/Loader";
 import { PageHeader, Button } from 'react-bootstrap';
 
 const mapStateToProps = (state) => {
-  const { foodItem, foodItemIsLoading } = state.foodDetails;
+  const { foodItem, foodItemIsLoading } = state.foodItem;
 
   return {
     foodItem,

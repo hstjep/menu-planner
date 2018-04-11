@@ -7,7 +7,7 @@ import FoodCategoryList from 'components/food-category/FoodCategoryList';
 import { PageHeader, Button } from 'react-bootstrap';
 
 const mapStateToProps = (state) => {
-  const { foodCategories, foodCategoriesAreLoading, isDeleteModalOpen } = state.foodCategory;
+  const { foodCategories, foodCategoriesAreLoading, isDeleteModalOpen } = state.foodCategories;
 
   return {
     foodCategories,
@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
   handleDeleteConfirmToggle: (id) => dispatch(toggleDeleteConfirm(id))
 });
 
-class FoodCategory extends PureComponent {
+class FoodCategories extends PureComponent {
   componentDidMount() {
     this.props.dispatch(getFoodCategories());
   }
@@ -47,4 +47,4 @@ class FoodCategory extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodCategory);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodCategories);
