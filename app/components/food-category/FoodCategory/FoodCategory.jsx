@@ -3,6 +3,7 @@ import styles from './foodCategory.css';
 import { Button, ButtonGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import ConfirmModal from "components/common/ConfirmModal";
+import PropTypes from 'prop-types';
 
 class FoodCategory extends React.Component {
   constructor() {
@@ -51,6 +52,18 @@ class FoodCategory extends React.Component {
       </tr>
     );
   }
+}
+
+PropTypes.FoodCategory = {
+  item: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+  }).isRequired,
+  isDeleteModalOpen: PropTypes.shape(
+    PropTypes.bool.isRequired
+  ),
+  handleDeleteConfirmToggle: PropTypes.func.isRequired,
+  handleFoodCategoryDelete: PropTypes.func.isRequired
 }
 
 export default FoodCategory;

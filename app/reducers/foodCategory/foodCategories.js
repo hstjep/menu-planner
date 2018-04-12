@@ -2,7 +2,7 @@ import { handleActions, combineActions } from 'redux-actions';
 import { FETCH_FOOD_CATEGORIES, DELETE_FOOD_CATEGORY, TOGGLE_DELETE_CONFIRM } from './../../constants/actionTypes';
 
 const initialState = {
-		foodCategories: undefined,
+		foodCategories: [],
 		foodCategoriesAreLoading: false,
 		isDeleteModalOpen: {}
 };
