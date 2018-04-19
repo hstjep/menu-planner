@@ -5,27 +5,7 @@ import styles from "./foodCategoryCreateForm.css";
 import validationMessages from '../../../constants/validationMessages';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-
-const FieldInput = ({ label, input, meta, type, placeholder }) => {
-	const { touched, error, warning } = meta;
-
-	return (
-		<FormGroup>
-			<Col componentClass={ControlLabel} sm={2}>
-				<label>{label}</label>
-			</Col>
-			<Col sm={4}>
-				<FormControl
-					type={type}
-					placeholder={placeholder}
-					value={input.value}
-					onChange={input.onChange}
-					onBlur={() => input.onBlur(input.value)} />
-				{touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
-			</Col>
-		</FormGroup>
-	)
-}
+import FieldInput from '../../common/FieldInput';
 
 class FoodCategoryCreateForm extends Component {
 	render() {
@@ -33,14 +13,14 @@ class FoodCategoryCreateForm extends Component {
 		if (foodCategoryIsLoading) return <Loader />
 
 		return (
-			<form onSubmit={handleSubmit}>
+			<Form onSubmit={handleSubmit} type="multipart/form-data" horizontal>
 				<Field name="title" component={FieldInput} type="text" value={foodCategory.title} label="Title" />
 				<FormGroup>
 					<Col smOffset={2} sm={10}>
 						<Button type="submit" bsStyle="primary" className={styles.btnCustom}>Save</Button>
 					</Col>
 				</FormGroup>
-			</form>
+			</Form>
 		)
 	}
 }
@@ -78,3 +58,5 @@ export default reduxForm({
 	enableReinitialize: true,
 	validate
 })(FoodCategoryCreateForm);
+
+

@@ -4,7 +4,8 @@ import { Link, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { getFoodCategory, createFoodCategory, updateFoodCategory } from "../../actions/foodCategoryActions";
 import FoodCategoryCreateForm from '../../components/food-category/FoodCategoryCreateForm';
-import { PageHeader } from 'react-bootstrap';
+import { PageHeader, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const mapStateToProps = (state) => {
 	const { foodCategory, foodCategoryIsLoading, isDeleteModalOpen } = state.foodCategory;
@@ -28,8 +29,6 @@ class FoodCategoryCreate extends PureComponent {
 		const id = this.props.match.params.id;
 		if (id) {
 			this.props.dispatch(getFoodCategory(id));
-		} else {
-			
 		}
 	}
 
@@ -61,6 +60,9 @@ class FoodCategoryCreate extends PureComponent {
 				<FoodCategoryCreateForm foodCategory={foodCategory} foodCategoryIsLoading={foodCategoryIsLoading}
 					onSubmit={this.handleSubmit} initialValues={initValues}
 				/>
+				<LinkContainer to={`/food-category`}>
+					<Button bsStyle="link">Back to List</Button>
+				</LinkContainer>
 			</div>
 		);
 	}

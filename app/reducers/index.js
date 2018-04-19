@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import food from './food/food';
+import foodCreate from './food/foodCreate';
 import foodItem from './food/foodItem';
 import foodCategories from './foodCategory/foodCategories';
 import foodCategory from './foodCategory/foodCategory';
@@ -7,8 +8,9 @@ import { reducer as form } from 'redux-form';
 
 export default combineReducers({ 
 	food, 
+	foodCreate,
 	foodItem, 
 	foodCategories, 
 	foodCategory,
-	form 
+	form
 });

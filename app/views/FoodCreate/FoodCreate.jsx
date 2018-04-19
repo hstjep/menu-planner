@@ -4,101 +4,72 @@ import { Link, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { getFoodItem, createFoodItem, updateFoodItem } from "../../actions/foodActions";
 import { uploadFile } from "../../actions/fileActions";
+import { getFoodCategories } from "../../actions/foodCategoryActions";
 import FoodCreateForm from '../../components/food/FoodCreateForm';
-import { PageHeader } from 'react-bootstrap';
+import { PageHeader, Button } from 'react-bootstrap';
+import { change } from 'redux-form';
+import { LinkContainer } from 'react-router-bootstrap';
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
+	// const { foodItem, foodItemIsLoading } = state.foodItem;
+	const { foodItem, foodItemIsLoading, foodCategories, foodCategoriesAreLoading } = state.foodCreate;
+
 	return {
-		dispatch,
-		createFoodItem: (foodItem, callback) => dispatch(createFoodItem(foodItem, callback)),
-		updateFoodItem: (foodItem, callback) => dispatch(updateFoodItem(foodItem, callback))
-	};
-};
+		foodItem,
+		foodItemIsLoading,
+		// isDeleteModalOpen,
+		foodCategories,
+		foodCategoriesAreLoading
+	}
+}
 
 class FoodCreate extends PureComponent {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			foodItem: {
-				title: '',
-				imageUrl: '',
-				description: ''
-			},
-			foodItemIsLoading: false,
-			fileInput: undefined
-		};
-		this.handleInputChange = this.handleInputChange.bind(this);
-		this.handleImageClear = this.handleImageClear.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.redirectToFoodList = this.redirectToFoodList.bind(this);
 	}
 
-
-	handleUpdateState = newState => {
-		this.setState(newState);
-	};
-
 	componentDidMount() {
 		const id = this.props.match.params.id;
+		let promises = [];
+
 		if (id) {
-			this.props.dispatch(getFoodItem(id, this.handleUpdateState));
+			this.props.dispatch(getFoodItem(id));
 		}
+
+		this.props.dispatch(getFoodCategories());	
 	}
 
-	handleInputChange(event) {
-		const target = event.target;
-
-		if (target.files && target.files.length > 0) {
-			this.setState({
-				fileInput: target.files[0]
-			});
-		} else {
-			const value = target.value;
-			const name = target.name;
-
-			this.setState({
-				foodItem: { ...this.state.foodItem, [name]: value }
-			});
-		}
+	handleFileInputClear() {
+		this.props.dispatch(change('createFood', 'title', ''));
 	}
 
-	handleImageClear() {
-		this.setState({
-			fileInput: undefined
-		});
-	}
-
-	handleSubmit(event) {
-		const image = this.state.fileInput;
+	handleSubmit = values => {
 		const id = this.props.match.params.id;
-		const { updateFoodItem, createFoodItem } = this.props;
+		const { dispatch } = this.props;
 
 		let promises = [];
 
-		if (image) {
-			promises.push(uploadFile(image, this.redirectToFoodList));
+		if (values.file && values.file.length > 0) {
+			promises.push(uploadFile(values.file[0], this.redirectToFoodList));
 		}
 
 		var that = this;
 		Promise.all(promises).then(function (data) {
-			that.setState({
-				foodItem: {
-					...that.state.foodItem,
-					imageUrl: data && data[0] ? data[0].path : ''
-				}
-			});
+			if (data && data.length > 0) {
+				values.imageUrl = data[0].path;
+			}
 
-			const newFoodItem = that.state.foodItem;
+			delete values.file;
 
 			if (id) {
-				updateFoodItem(id, newFoodItem, that.redirectToFoodList);
+				dispatch(updateFoodItem(id, values, that.redirectToFoodList));
 			} else {
-				createFoodItem(newFoodItem, that.redirectToFoodList);
+				dispatch(createFoodItem(values, that.redirectToFoodList));
 			}
 		})
-
-		event.preventDefault();
 	}
 
 	redirectToFoodList() {
@@ -107,19 +78,27 @@ class FoodCreate extends PureComponent {
 
 	render() {
 		const match = this.props.match;
-		const { foodItem, fileInput, foodItemIsLoading } = this.state;
+		const { foodItem, foodItemIsLoading, foodCategories, foodCategoriesAreLoading } = this.props;
+		const initValues = this.props.match.params.id ? this.props.foodItem : {};
 
 		return (
 			<div>
 				<PageHeader>
 					<small>{match.params.id ? 'Edit' : 'Create'} food</small>
 				</PageHeader>
-				<FoodCreateForm foodItem={foodItem} foodItemIsLoading={foodItemIsLoading}
-					handleSubmit={this.handleSubmit} handleInputChange={this.handleInputChange}
-					fileInput={fileInput} handleImageClear={this.handleImageClear} />
+				<FoodCreateForm
+					foodItem={foodItem}
+					foodItemIsLoading={foodItemIsLoading}
+					foodCategories={foodCategories}
+					foodCategoriesAreLoading={foodCategoriesAreLoading}
+					onSubmit={this.handleSubmit}
+					initialValues={initValues} />
+				<LinkContainer to={`/food`}>
+					<Button bsStyle="link">Back to List</Button>
+				</LinkContainer>
 			</div>
 		);
 	}
 }
 
-export default connect(null, mapDispatchToProps)(FoodCreate);
+export default connect(mapStateToProps)(FoodCreate);

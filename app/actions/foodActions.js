@@ -11,7 +11,8 @@ const getFoodItems = () => {
 				data: foodItems
 			}))
 			.catch(error => dispatch({
-				type: FETCH_FOOD.ERROR
+				type: FETCH_FOOD.ERROR,
+				data: error
 			}))
 	}
 };

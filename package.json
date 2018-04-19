@@ -61,6 +61,7 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "start-server-webpack-plugin": "^2.2.0",

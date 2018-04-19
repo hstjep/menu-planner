@@ -4,7 +4,6 @@ import Loader from "components/common/Loader";
 import { Table } from 'react-bootstrap';
 import styles from './foodList.css'; 
 
-
 class FoodList extends Component {
   render() { 
     const { foodItems, foodItemsAreLoading, handleDeleteConfirmToggle, handleFoodItemDelete, isDeleteModalOpen } = this.props;

@@ -30,7 +30,7 @@ class FoodItem extends React.Component {
           {item.title}
         </th>
         <th>
-          {item.category}
+          {item.category.title}
         </th>
         <th>
           {item.subcategory}

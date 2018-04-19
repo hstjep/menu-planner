@@ -4,14 +4,15 @@ import { Link, Route } from 'react-router-dom';
 import { getFoodItem } from "actions/foodActions";
 import Loader from "components/common/Loader";
 import { PageHeader, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const mapStateToProps = (state) => {
-  const { foodItem, foodItemIsLoading } = state.foodItem;
+	const { foodItem, foodItemIsLoading } = state.foodItem;
 
-  return {
-    foodItem,
-    foodItemIsLoading
-  }
+	return {
+		foodItem,
+		foodItemIsLoading
+	}
 }
 
 class FoodDetails extends PureComponent {
@@ -37,16 +38,20 @@ class FoodDetails extends PureComponent {
 					<dd>{foodItem.description}</dd>
 
 					<dt>Category</dt>
-					<dd>{foodItem.category}</dd>
+					<dd>{foodItem.category.title}</dd>
 
 					<dt>Subcategory</dt>
 					<dd>{foodItem.subcategory}</dd>
 
 					<dd><img src={foodItem.imageUrl} /></dd>
 				</dl>
+				<LinkContainer to={`/food`}>
+					<Button bsStyle="link">Back to List</Button>
+				</LinkContainer>
 			</div>
 		);
 	}
 }
 
 export default connect(mapStateToProps)(FoodDetails);
+

@@ -10,7 +10,8 @@ export default {
 
 // Gets food.
 function get() {
-	var query = Food.find();
+	var query = Food.find()
+		.populate('category');
 
 	return query.sort({ title: 'asc' })
 		.limit(12)
@@ -20,6 +21,7 @@ function get() {
 // Gets food by id.
 function getById(id) {
 	return Food.findById(id)
+		.populate('category')
 		.exec();
 }
 
@@ -28,6 +30,8 @@ function create(item) {
 	var entry = new Food({
 		title: item.title,
 		description: item.description,
+		category: item.category,
+		subcategory: item.subcategory,
 		imageUrl: item.imageUrl
 	});
 
