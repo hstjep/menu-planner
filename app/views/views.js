@@ -4,3 +4,5 @@ export { default as FoodDetails } from './FoodDetails';
 export { default as FoodCreate } from './FoodCreate';
 export { default as FoodCategories } from './FoodCategories';
 export { default as FoodCategoryCreate } from './FoodCategoryCreate';
+export { default as Meals } from './Meals';
+export { default as MealCreate } from './MealCreate';

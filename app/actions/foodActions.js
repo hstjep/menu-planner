@@ -96,4 +96,8 @@ const deleteFoodItem = (id, updateStateCallback) => {
 	}
 };
 
-export { getFoodItems, getFoodItem, createFoodItem, updateFoodItem, deleteFoodItem };
+const selectFood = value => ({
+	type: 'SELECT_FOOD',
+	data: value
+});
+export { getFoodItems, getFoodItem, createFoodItem, updateFoodItem, deleteFoodItem, selectFood };

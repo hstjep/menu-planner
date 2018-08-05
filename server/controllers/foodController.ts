@@ -29,6 +29,8 @@ function create(req, res) {
 	foodService.create(req.body)
 		.then(function(){
 			return res.json('Food created.');
+		}, function(err) {
+			console.log(err);
 		});
 }
 

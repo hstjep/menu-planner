@@ -16,6 +16,8 @@ mongoose.connect('mongodb://localhost/menu-plan', function (err, res) {
 var food = require('./routes/food');
 var foodCategory = require('./routes/foodCategory');
 var file = require('./routes/file');
+var meal = require('./routes/meal');
+var menu = require('./routes/menu');
 const path = require('path');
 
 // app.get('/*', function(req, res) {   
@@ -42,5 +44,7 @@ app.get("/api", (req, res) => {
 app.use('/api/food', food);
 app.use('/api/food-category', foodCategory);
 app.use('/api/file', file);
+app.use('/api/meal', meal);
+app.use('/api/menu', menu);
 
 export default app;

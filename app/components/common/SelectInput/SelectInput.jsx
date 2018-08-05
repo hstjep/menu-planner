@@ -19,11 +19,9 @@ const SelectInput = ({ label, input, meta, type, placeholder, data, optionField,
 					onChange={input.onChange}
 					onBlur={() => input.onBlur(input.value)}>
 					<option></option>
-						{data.map(item => <option
-							key={item._id}
-							value={item._id}>{item[optionField]}</option>)}
-							<option>test</option>
-
+						{data.map((item, index) => <option
+							key={item._id ? item._id : index}
+							value={item._id}>{optionField ? item[optionField] : item}</option>)}
 				</FormControl>
 				{touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
 			</Col>

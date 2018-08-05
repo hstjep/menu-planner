@@ -11,7 +11,7 @@ export default {
 // Gets food.
 function get() {
 	var query = Food.find()
-		.populate('category');
+		.populate('foodCategory');
 
 	return query.sort({ title: 'asc' })
 		.limit(12)
@@ -21,7 +21,7 @@ function get() {
 // Gets food by id.
 function getById(id) {
 	return Food.findById(id)
-		.populate('category')
+		.populate('foodCategory')
 		.exec();
 }
 
@@ -30,8 +30,8 @@ function create(item) {
 	var entry = new Food({
 		title: item.title,
 		description: item.description,
-		category: item.category,
-		subcategory: item.subcategory,
+		foodCategory: item.foodCategory,
+		foodSubcategory: item.foodSubcategory,
 		imageUrl: item.imageUrl
 	});
 

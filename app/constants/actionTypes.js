@@ -15,6 +15,18 @@ export const DELETE_FOOD_CATEGORY = defineAction('DELETE_FOOD_CATEGORY', [PENDIN
 export const CREATE_FOOD_CATEGORY = defineAction('CREATE_FOOD_CATEGORY', [PENDING, ERROR, SUCCESS]);
 export const UPDATE_FOOD_CATEGORY = defineAction('UPDATE_FOOD_CATEGORY', [PENDING, ERROR, SUCCESS]);
 
+// Meal
+export const FETCH_MEALS = defineAction('FETCH_MEALS', [PENDING, ERROR, SUCCESS]);
+export const FETCH_MEAL = defineAction('FETCH_MEAL', [PENDING, ERROR, SUCCESS]);
+export const DELETE_MEAL = defineAction('DELETE_MEAL', [PENDING, ERROR, SUCCESS]);
+export const CREATE_MEAL = defineAction('CREATE_MEAL', [PENDING, ERROR, SUCCESS]);
+export const UPDATE_MEAL = defineAction('UPDATE_MEAL', [PENDING, ERROR, SUCCESS]);
+
+// Menu
+export const FETCH_MENU = defineAction('FETCH_MENU', [PENDING, ERROR, SUCCESS]);
+
+export const FETCH_MENU_PLANS = defineAction('FETCH_MENU_PLANS', [PENDING, ERROR, SUCCESS]);
+
 // Common
 export const TOGGLE_DELETE_CONFIRM = 'TOGGLE_DELETE_CONFIRM';
 

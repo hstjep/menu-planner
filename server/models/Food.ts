@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 var foodSchema = new Schema({
 	title: { type: String, required: true },
 	description: { type: String },
-	category: { type: Schema.Types.ObjectId, ref: 'FoodCategory' },
-	subcategory: {type: String, enum: ['Basic', 'Prepared']},
+	foodCategory: { type: Schema.Types.ObjectId, ref: 'FoodCategory' },
+	foodSubcategory: {type: String, enum: ['Basic', 'Prepared']},
 	imageUrl: { type: String }
 });
 

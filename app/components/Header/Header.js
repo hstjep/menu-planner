@@ -22,9 +22,12 @@ const Header = (props) => {
                 <MenuItem eventKey={3.1}>Food</MenuItem>
               </LinkContainer>
               <LinkContainer to="/food-category">
-                <MenuItem eventKey={3.2}>Food Category</MenuItem>
+                <MenuItem eventKey={3.2}>Food Categories</MenuItem>
               </LinkContainer>
-              {/* <MenuItem divider /> */}
+              <MenuItem divider />
+              <LinkContainer to="/meals">
+                <MenuItem eventKey={3.3}>Meals</MenuItem>
+              </LinkContainer>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

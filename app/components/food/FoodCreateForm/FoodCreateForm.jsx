@@ -17,18 +17,18 @@ class FoodCreateForm extends Component {
 			<Form onSubmit={handleSubmit} type="multipart/form-data" horizontal>
 				<Field name="title" component={FieldInput} type="text" value={foodItem.title} label="Title" />
 				<Field name="description" component={FieldInput} type="textarea" value={foodItem.description} label="Description" />
-				<Field name="category" component={SelectInput} type="select" value={foodItem.category} label="Category" data={foodCategories} selectedValue={foodItem.category} optionField="title" />
+				<Field name="foodCategory" component={SelectInput} type="select" value={foodItem.foodCategory} label="Category" data={foodCategories} selectedValue={foodItem.category} optionField="title" />
 				<FormGroup>
 					<Col componentClass={ControlLabel} sm={2}>
 						<label>Subcategory</label>
 					</Col>
 					<Col sm={4}>
 						<label className="radio-inline">
-							<Field name="subcategory" component="input" type="radio" value="Basic" label="Basic" />
+							<Field name="foodSubcategory" component="input" type="radio" value="Basic" label="Basic" />
 							Basic
 						</label>
 						<label className="radio-inline">
-							<Field name="subcategory" component="input" type="radio" value="Prepared" label="Prepared" />
+							<Field name="foodSubcategory" component="input" type="radio" value="Prepared" label="Prepared" />
 							Prepared
 						</label>
 					</Col>
@@ -50,7 +50,7 @@ class FoodCreateForm extends Component {
 
 export default reduxForm({
 	form: 'createFood',
-	fileds: ['title', 'description', 'file', 'category'],
+	fileds: ['title', 'description', 'file', 'foodCategory'],
 	enableReinitialize: true
 	// validate
 })(FoodCreateForm);

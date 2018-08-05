@@ -1,10 +1,11 @@
 import React from 'react';
-import styles from './foodItem.css';
+import styles from './Meal.css';
 import { Button, ButtonGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import ConfirmModal from "components/common/ConfirmModal";
+import PropTypes from 'prop-types';
 
-class FoodItem extends React.Component {
+class Meal extends React.Component {
   constructor() {
     super();
     this.handleDeleteConfirmToggle = this.handleDeleteConfirmToggle.bind(this);
@@ -18,31 +19,26 @@ class FoodItem extends React.Component {
 
   handleDeleteConfirm() {
     const id = this.props.item._id;
-    this.props.handleFoodItemDelete(id);
+    this.props.handleMealDelete(id);
   }
 
   render() {
-    const { item, isDeleteModalOpen, handleDeleteConfirmToggle, handleFoodItemDelete } = this.props;
+    const { item, isDeleteModalOpen, handleDeleteConfirmToggle, handleMealDelete } = this.props;
 
     return (
       <tr>
-        <th>
-          {item.title}
-        </th>
-        <th>
-          {item.foodCategory.title}
-        </th>
-        <th>
-          {item.foodSubcategory}
-        </th>
-        <th>
+        <td>{item.food.map((foodItem, i) => <span 
+        key={foodItem._id}>
+        {foodItem.title}
+        {i < (item.food.length - 1) ? ', ' : ''}
+        </span>)}  
+        </td>
+        <td>
+          {item.mealType}
+        </td>
+        <td>
           <ButtonGroup bsSize="small">
-            <LinkContainer to={`/food/${item._id}`}>
-              <OverlayTrigger placement="top" overlay={<Tooltip id="details">Details</Tooltip>}>
-                <Button bsStyle="info"><span className="glyphicon glyphicon-info-sign" /></Button>
-              </OverlayTrigger>
-            </LinkContainer>
-            <LinkContainer to={`/food/edit/${item._id}`}>
+            <LinkContainer to={`/meals/edit/${item._id}`}>
               <OverlayTrigger placement="top" overlay={<Tooltip id="edit">Edit</Tooltip>}>
                 <Button bsStyle="primary"><span className="glyphicon glyphicon-edit" /></Button>
               </OverlayTrigger>
@@ -56,12 +52,24 @@ class FoodItem extends React.Component {
             onClose={this.handleDeleteConfirmToggle}
             onConfirm={this.handleDeleteConfirm}
             item={item}
-            message={"Are you sure you want to delete " + item.title + "?"}
+            message={"Are you sure you want to delete " + item.type + "?"}
           />
-        </th>
+        </td>
       </tr>
     );
   }
 }
 
-export default FoodItem;
+// PropTypes.Meal = {
+//   item: PropTypes.shape({
+//     _id: PropTypes.string.isRequired,
+//     type: PropTypes.string.isRequired
+//   }).isRequired,
+//   isDeleteModalOpen: PropTypes.shape(
+//     PropTypes.bool.isRequired
+//   ),
+//   handleDeleteConfirmToggle: PropTypes.func.isRequired,
+//   handleMealDelete: PropTypes.func.isRequired
+// }
+
+export default Meal;

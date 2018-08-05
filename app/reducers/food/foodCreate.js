@@ -5,8 +5,8 @@ const initialState = {
 	foodItem: {
 		title: '',
 		description: '',
-		category: '',
-		subcategory: ''
+		foodCategory: '',
+		foodSubcategory: ''
 	},
 	foodItemIsLoading: false,
 	foodCategories: [],
