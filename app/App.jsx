@@ -24,6 +24,8 @@ class App extends React.Component {
 						<Route exact path="/meals" component={Meals}/>
 						<Route exact path="/meals/create" component={MealCreate}/>
 						<Route exact path="/meals/edit/:id" component={MealCreate}/>
+						<Route exact path="/menu/:type/create" component={MenuPlanCreate}/>
+						<Route exact path="/menu/:type/edit/:id" component={MenuPlanCreate}/>
 						</Switch>
 			</div>
 			</Router>
