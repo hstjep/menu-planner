@@ -16,7 +16,8 @@ class MealCreateForm extends Component {
 	
 			return (
 				<Form onSubmit={handleSubmit} type="multipart/form-data" horizontal>
-					<Field name="mealType" component={SelectInput} type="select" value={meal.type} label="Type" data={mealTypes} selectedValue={meal.type} />
+					<Field name="title" component={FieldInput} type="text" value={meal.title} label="Title" />
+					{/* <Field name="mealType" component={SelectInput} type="select" value={meal.type} label="Type" data={mealTypes} selectedValue={meal.type} /> */}
 					<FoodSelectInput name="food" value={meal.food} selectedValue={meal.food} onChange={handleFoodChange}/>	
 
 					<FormGroup>

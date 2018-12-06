@@ -1,14 +1,13 @@
 import React, { PureComponent } from "react";
 import { connect } from 'react-redux';
-import MenuList from 'components/menu/MenuList';
-import { Table, ListGroup, ListGroupItem } from 'react-bootstrap';
-import  { getMenuPlans, getListOfDays } from "actions/menuPlanActions";
+import MenuPlanList from 'components/menu-plan/MenuPlanList';
+import { getWeekMenuPlans } from "actions/menuPlanActions";
 
 const mapStateToProps = (state) => {
-  const { days } = state.menuPlan;
+  const { menuPlanItems } = state.menuPlans;
 
   return {
-    days
+    menuPlanItems
   }
 }
 
@@ -17,20 +16,17 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Index extends PureComponent {
+  componentDidMount() {
+    this.props.dispatch(getWeekMenuPlans());
+  }
 
-
-
-componentDidMount() {
-  this.props.dispatch(getListOfDays()); 
-
-  var filter = {
-    days: 7
-  };
-  this.props.dispatch(getMenuPlans(filter));
-}
   render() {
+    const { menuPlanItems } = this.props;
+
+    if (!menuPlanItems) return null;
+
     return (
-      <MenuList days={this.props.days}/>
+      <MenuPlanList menuPlanItems={menuPlanItems} />
     );
   }
 }

@@ -7,6 +7,11 @@ router.get('/', function (req: express.Request, res: express.Response) {
 	return menuCtrl.get(req, res);
 });
 
+// GET current week menu.
+router.get('/week', function (req: express.Request, res: express.Response) {
+	return menuCtrl.getOrCreateCurrentWeekMenu(req, res);
+});
+
 // GET menu by id.
 router.get('/:id', function(req: express.Request, res: express.Response) {
 	return menuCtrl.getById(req, res);

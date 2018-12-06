@@ -27,14 +27,14 @@ class Meal extends React.Component {
 
     return (
       <tr>
+        <td>
+          {item.title}
+        </td>
         <td>{item.food.map((foodItem, i) => <span 
         key={foodItem._id}>
         {foodItem.title}
         {i < (item.food.length - 1) ? ', ' : ''}
         </span>)}  
-        </td>
-        <td>
-          {item.mealType}
         </td>
         <td>
           <ButtonGroup bsSize="small">
@@ -52,7 +52,7 @@ class Meal extends React.Component {
             onClose={this.handleDeleteConfirmToggle}
             onConfirm={this.handleDeleteConfirm}
             item={item}
-            message={"Are you sure you want to delete " + item.type + "?"}
+            message={"Are you sure you want to delete " + item.mealType + "?"}
           />
         </td>
       </tr>

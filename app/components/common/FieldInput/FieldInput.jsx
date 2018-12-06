@@ -1,7 +1,8 @@
 import React from "react";
 import { Col, FormGroup, FormControl, ControlLabel, Label } from 'react-bootstrap';
+import moment from 'moment';
 
-const FieldInput = ({ label, input, meta, type, placeholder }) => {
+const FieldInput = ({ label, input, meta, type, placeholder, disabled }) => {
 	const { touched, error, warning } = meta;
 
 	return (
@@ -14,9 +15,10 @@ const FieldInput = ({ label, input, meta, type, placeholder }) => {
 					type={type}
 					componentClass={type === 'textarea' ? type : undefined}
 					placeholder={placeholder}
-					value={input.value}
+					value={!isNaN(Date.parse(input.value)) ? moment(input.value).format('dddd DD/MM/YYYY') : input.value}
 					onChange={input.onChange}
-					onBlur={() => input.onBlur(input.value)} />
+					onBlur={() => input.onBlur(input.value)}
+					disabled={disabled} />
 				{touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
 			</Col>
 		</FormGroup>

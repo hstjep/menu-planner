@@ -1,4 +1,4 @@
-import { FETCH_MEALS, FETCH_MEAL, CREATE_MEAL, UPDATE_MEAL, DELETE_MEAL } from './../constants/actionTypes';
+import { FETCH_MEALS, FETCH_MEAL, CREATE_MEAL, UPDATE_MEAL, DELETE_MEAL, SELECT_MEAL } from './../constants/actionTypes';
 
 const getMeals = () => {
 	return (dispatch) => {
@@ -89,4 +89,9 @@ const deleteMeal = (id, updateStateCallback) => {
 	}
 };
 
-export { getMeals, getMeal, createMeal, updateMeal, deleteMeal };
+const selectMeal = value => ({
+	type: SELECT_MEAL,
+	data: value
+});
+
+export { getMeals, getMeal, createMeal, updateMeal, selectMeal, deleteMeal };

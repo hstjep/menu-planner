@@ -59,15 +59,18 @@ class MealCreate extends PureComponent {
 		const id = this.props.match.params.id;
 		const { dispatch } = this.props;
 
-		if (values.food && values.food.length > 0) {
-			values.food = values.food.map(function(item) {
-				return item.value;
+		let data = JSON.parse(JSON.stringify(values));
+
+		if (data.food && data.food.length > 0) {
+			data.food = data.food.map(function(item) {
+				return item.value || item._id;
 			});
 		}
+
 		if (id) {
-			dispatch(updateMeal(id, values, this.redirectToMealList));
+			dispatch(updateMeal(id, data, this.redirectToMealList));
 		} else {
-			dispatch(createMeal(values, this.redirectToMealList));
+			dispatch(createMeal(data, this.redirectToMealList));
 		}
 	}
 

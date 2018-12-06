@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';  
 import Header from './components/Header/Header';
 import { BrowserRouter as Router, Switch, Route, hashHistory } from 'react-router-dom';
-import { Index, Food, FoodDetails, FoodCreate, FoodCategories, FoodCategoryCreate, Meals, MealCreate } from './views/views';
+import { Index, Food, FoodDetails, FoodCreate, FoodCategories, FoodCategoryCreate, Meals, MealCreate, MenuPlanCreate } from './views/views';
 import styles from './app.css';
 
 class App extends React.Component {  
@@ -24,7 +24,7 @@ class App extends React.Component {
 						<Route exact path="/meals" component={Meals}/>
 						<Route exact path="/meals/create" component={MealCreate}/>
 						<Route exact path="/meals/edit/:id" component={MealCreate}/>
-						<Route exact path="/menu/:type/create" component={MenuPlanCreate}/>
+						{/* <Route exact path="/menu/:type/create" component={MenuPlanCreate}/> */}
 						<Route exact path="/menu/:type/edit/:id" component={MenuPlanCreate}/>
 						</Switch>
 			</div>

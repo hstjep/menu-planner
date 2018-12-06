@@ -28,7 +28,7 @@ function getById(id) {
 // Creates meal.
 function create(item) {
 	var entry = new Meal({
-		mealType: item.mealType,
+		title: item.title,
 		food: item.food
 	});
 

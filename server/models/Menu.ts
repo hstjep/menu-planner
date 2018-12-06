@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 // Mongoose schema definition.
 const menuSchema = new Schema({
 	date: {type: Date, required: true},	
+	type: {type: String, enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack'], required: true},	
 	meals: [{ type: Schema.Types.ObjectId, ref: 'Meal' }]
 });
 

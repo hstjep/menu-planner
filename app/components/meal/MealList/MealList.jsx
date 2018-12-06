@@ -17,8 +17,8 @@ class MealList extends Component {
         <Table responsive striped condensed hover>
           <thead>
             <tr>
+              <th>Title</th>
               <th>Food</th>
-              <th>Type</th>
               <th></th>
             </tr>
           </thead>

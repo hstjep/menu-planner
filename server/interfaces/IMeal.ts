@@ -1,7 +1,7 @@
 import IFood from './IFood';
 
 export interface IMeal {
-	mealType: number,
+	title: string,
 	food: IFood[]
 }
 

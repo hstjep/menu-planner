@@ -8,15 +8,12 @@ const Header = (props) => {
       <Navbar inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#brand">Menu Planner</a>
+            <a href="/">Menu Planner</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav>
-            <IndexLinkContainer to="/">
-              <NavItem eventKey={1}>Home</NavItem>
-            </IndexLinkContainer>
+          <Nav pullRight>
             <NavDropdown eventKey={3} title="Administration" id="nav-dropdown">
               <LinkContainer to="/food">
                 <MenuItem eventKey={3.1}>Food</MenuItem>

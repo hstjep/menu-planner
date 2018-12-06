@@ -14,7 +14,7 @@ function get() {
 		.populate('foodCategory');
 
 	return query.sort({ title: 'asc' })
-		.limit(12)
+		.limit(20)
 		.exec();
 }
 

@@ -9,7 +9,8 @@
 	  "strictNullChecks": true,
 	  "sourceMap": true,
 		"target": "es5",
-		"jsx": "preserve"
+		"jsx": "preserve",
+		"lib": ["es5", "es2015", "dom", "scripthost"]
 	},
 	"include": [
 	  "server/**/*"

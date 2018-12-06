@@ -1,29 +1,35 @@
-import { handleActions, combineActions } from 'redux-actions';
-import { FETCH_MENU_PLANS } from './../../constants/actionTypes';
+import { handleActions } from 'redux-actions';
+import { FETCH_MENU_PLAN, SELECT_MEAL } from './../../constants/actionTypes';
 
 const initialState = {
-		days: [],
-		menuPlanItems: undefined,
-		isMenuPlanLoading: false
+	menuPlan: {
+		date: '',
+		meals: []
+	},
+	meals: [],
+	isMenuPlanLoading: false
 };
 
 const menuPlan = handleActions({
-	[FETCH_MENU_PLANS.PENDING]: (state) => ({
+	[FETCH_MENU_PLAN.PENDING]: (state) => ({
 		...state,
 		isMenuPlanLoading: true
 	}),
-	[FETCH_MENU_PLANS.SUCCESS]: (state, action) => ({
+	[FETCH_MENU_PLAN.SUCCESS]: (state, action) => ({
 		...state,
-		menuPlanItems: action.data,
+		menuPlan: action.data,
 		isMenuPlanLoading: false
 	}),
-	[FETCH_MENU_PLANS.ERROR]: (state) => ({
+	[FETCH_MENU_PLAN.ERROR]: (state) => ({
 		...state,
 		isMenuPlanLoading: false
 	}),
-	['SET_WEEK_DAYS']: (state, action) => ({
+	[SELECT_MEAL] : (state, action) => ({
 		...state,
-		days: action.data
+		menuPlan: {
+			...state.menuPlan,
+			meals: action.data
+		} 
 	})
 }, initialState);
 

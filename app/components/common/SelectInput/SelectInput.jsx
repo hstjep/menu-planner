@@ -21,7 +21,8 @@ const SelectInput = ({ label, input, meta, type, placeholder, data, optionField,
 					<option></option>
 						{data.map((item, index) => <option
 							key={item._id ? item._id : index}
-							value={item._id}>{optionField ? item[optionField] : item}</option>)}
+							value={item._id}>{optionField ? item[optionField] : item}
+							</option>)}
 				</FormControl>
 				{touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
 			</Col>

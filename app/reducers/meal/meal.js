@@ -1,12 +1,11 @@
 import { handleActions, combineActions } from 'redux-actions';
-import { FETCH_MEAL } from './../../constants/actionTypes';
+import { FETCH_MEAL, SELECT_FOOD } from './../../constants/actionTypes';
 
 const initialState = {
 	meal: {
-		food: [],
-		mealType: ''
+		title: '',
+		food: []
 	},
-	mealTypes: ['Breakfast', 'Lunch', 'Dinner', 'Snack'],
 	foodItems: [],
 	mealIsLoading: false
 };
@@ -25,10 +24,10 @@ const meal = handleActions({
 		...state,
 		mealIsLoading: false
 	}),
-	['SELECT_FOOD'] : (state, action) => ({
+	[SELECT_FOOD] : (state, action) => ({
 		...state,
 		meal: {
-			...state,
+			...state.meal,
 			food: action.data
 		} 
 	})

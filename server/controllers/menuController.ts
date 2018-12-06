@@ -3,6 +3,7 @@ import menuService from '../services/menuService';
 export default {
 	get: get,
 	getById: getById,
+	getOrCreateCurrentWeekMenu: getOrCreateCurrentWeekMenu,
 	create: create,
 	update: update,
 	remove: remove
@@ -22,6 +23,13 @@ function getById(req, res) {
 		.then(function(meal){
 			return res.json(meal);
 		});
+}
+
+function getOrCreateCurrentWeekMenu(req, res) {
+	return menuService.getOrCreateCurrentWeekMenu()
+	.then(function(meal) {
+		return res.json(meal);
+	});
 }
 
 // Creates menu.

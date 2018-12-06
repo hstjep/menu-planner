@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import MenuItem from 'components/menu/MenuItem';
+import MenuPlanItem from 'components/menu-plan/MenuPlanItem';
 import Loader from "components/common/Loader";
 import { Table } from 'react-bootstrap';
-import styles from './menuList.css';
+import styles from './menuPlanList.css';
 
-class MenuList extends Component {
+class MenuPlanList extends Component {
 	render() {
-		const { days } = this.props;
+		const { menuPlanItems, handleMenuPlanSelect } = this.props;
 
 		// if (foodItemsAreLoading) return <Loader />
-		// if (!foodItems) return null;
+		// if (!menuPlanItems) return null;
 
 		return (
 			<Table striped bordered condensed hover className={styles.menuTable}>
@@ -22,13 +22,14 @@ class MenuList extends Component {
 						<th>Snack</th>
 					</tr>
 				</thead>
-				{days.map((day, index) => <MenuItem
+				{menuPlanItems.map((menuPlan, index) => <MenuPlanItem
 					key={index}
-					item={day}
+					item={menuPlan}
+					handleMenuPlanSelect={handleMenuPlanSelect}
 				/>)}	
 			</Table>
 		)
 	}
 }
 
-export default MenuList;  
+export default MenuPlanList;  

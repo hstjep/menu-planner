@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 // Mongoose schema definition.
 var mealSchema = new Schema({
-	mealType: {type: String, enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack'], required: true},	
+	title: { type: String, required: true },
 	food: [{ type: Schema.Types.ObjectId, ref: 'Food' }]
 });
 

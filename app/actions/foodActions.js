@@ -1,4 +1,4 @@
-import { FETCH_FOOD, FETCH_FOOD_ITEM, CREATE_FOOD_ITEM, UPDATE_FOOD_ITEM, DELETE_FOOD_ITEM } from './../constants/actionTypes';
+import { FETCH_FOOD, FETCH_FOOD_ITEM, CREATE_FOOD_ITEM, UPDATE_FOOD_ITEM, DELETE_FOOD_ITEM, SELECT_FOOD } from './../constants/actionTypes';
 
 const getFoodItems = () => {
 	return (dispatch) => {
@@ -97,7 +97,7 @@ const deleteFoodItem = (id, updateStateCallback) => {
 };
 
 const selectFood = value => ({
-	type: 'SELECT_FOOD',
+	type: SELECT_FOOD,
 	data: value
 });
 export { getFoodItems, getFoodItem, createFoodItem, updateFoodItem, deleteFoodItem, selectFood };
