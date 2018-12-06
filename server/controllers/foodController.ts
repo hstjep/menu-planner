@@ -10,7 +10,12 @@ export default {
 
 // Gets food.
 function get(req, res) {
-	foodService.get()
+	const pageOptions = {
+		pageNumber: parseInt(req.query.pageNumber),
+		pageSize: parseInt(req.query.pageSize)
+	};
+
+	foodService.get(pageOptions)
 		.then(function(food) {
 			return res.json(food);
 		});

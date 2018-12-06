@@ -2,7 +2,7 @@ import { handleActions, combineActions } from 'redux-actions';
 import { FETCH_FOOD_ITEM, FETCH_FOOD_CATEGORIES } from './../../constants/actionTypes';
 
 const initialState = {
-	foodItem: {
+	foodItem:  {
 		title: '',
 		description: '',
 		foodCategory: '',

@@ -11,15 +11,18 @@ import { change } from 'redux-form';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const mapStateToProps = (state) => {
-	// const { foodItem, foodItemIsLoading } = state.foodItem;
-	const { foodItem, foodItemIsLoading, foodCategories, foodCategoriesAreLoading } = state.foodCreate;
+	const { foodItem, foodItemIsLoading } = state.foodItem;
+	const { foodCategories, foodCategoriesAreLoading } = state.foodCategories;
+	// const { foodItem, foodItemIsLoading, foodCategories, foodCategoriesAreLoading } = state.foodItem;
 
 	return {
 		foodItem,
 		foodItemIsLoading,
-		// isDeleteModalOpen,
 		foodCategories,
 		foodCategoriesAreLoading
+		// isDeleteModalOpen,
+		// foodCategories,
+		// foodCategoriesAreLoading
 	}
 }
 
@@ -80,7 +83,7 @@ class FoodCreate extends PureComponent {
 		const match = this.props.match;
 		const { foodItem, foodItemIsLoading, foodCategories, foodCategoriesAreLoading } = this.props;
 		const initValues = this.props.match.params.id ? this.props.foodItem : {};
-
+		
 		return (
 			<div>
 				<PageHeader>

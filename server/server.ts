@@ -3,7 +3,6 @@ const app = express();
 var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 
-
 mongoose.connect('mongodb://localhost/menu-plan', function (err, res) {
   if (err) {
     console.log ('ERROR connecting to db: ' + err);
@@ -12,22 +11,12 @@ mongoose.connect('mongodb://localhost/menu-plan', function (err, res) {
   }
 });
 
-
 var food = require('./routes/food');
 var foodCategory = require('./routes/foodCategory');
 var file = require('./routes/file');
 var meal = require('./routes/meal');
 var menu = require('./routes/menu');
 const path = require('path');
-
-// app.get('/*', function(req, res) {   
-//   res.sendFile(path.join(__dirname, 'path/to/your/index.html'), function(err) {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-//   })
-// })
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

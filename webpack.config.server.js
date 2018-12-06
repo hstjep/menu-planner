@@ -11,7 +11,6 @@ module.exports =  {
     externals: [nodeExternals({ whitelist: ["webpack/hot/poll?1000"] })],
     module: {
         rules: [
-            // { test: /\.js?$/, use: "babel-loader", exclude: /node_modules/ },
             {
                 test: /\.ts?$/,
                 loader: 'awesome-typescript-loader',
@@ -36,10 +35,6 @@ module.exports =  {
         net: 'empty'
     },
     resolve: {
-        // modules: [
-        //     path.resolve('./server'),
-        //     './node_modules/'
-        // ],
         extensions: ['*', '.js', '.ts', '.tsx', '.webpack.js', '.web.js'],
     }
 };

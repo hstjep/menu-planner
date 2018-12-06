@@ -9,13 +9,30 @@ export default {
 };
 
 // Gets food.
-function get() {
-	var query = Food.find()
-		.populate('foodCategory');
-
-	return query.sort({ title: 'asc' })
-		.limit(20)
-		.exec();
+function get(pageOptions) {
+	return new Promise(function (resolve, reject) {
+		Food.find()
+			.populate('foodCategory')
+			.sort({ title: 'asc' })
+			.skip(pageOptions.pageSize * (pageOptions.pageNumber - 1))
+			.limit(pageOptions.pageSize)
+			.exec()
+			.then(function (foodItems) {
+				Food.count()
+					.exec()
+					.then(function (count) {
+						resolve({
+							items: foodItems,
+							currentPage: pageOptions.pageNumber,
+							totalPages: Math.ceil(count / pageOptions.pageSize)
+						})
+					}, function (error) {
+						reject(error);
+					})
+			}, function (error) {
+				reject(error);
+			});
+	});
 }
 
 // Gets food by id.

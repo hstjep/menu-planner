@@ -33,13 +33,6 @@ module.exports = {
     ]
   },
   module: {
-    // rules: [
-    //   { 
-    //     test: /\.js$/, 
-    //     exclude: /node_modules/, 
-    //     loader: 'babel-loader' 
-    //   }
-    // ],
     loaders: [
       {
         test: /\.jsx?$/,
@@ -59,18 +52,7 @@ module.exports = {
               loader: require.resolve("css-loader"),
               options: {
                   importLoaders: 1,
-                  modules: true,
-                  // localIdentName: "[name]__[local]",
-                  // getLocalIdent: (
-                  //     context,
-                  //     localIdentName,
-                  //     localName,
-                  //     options
-                  // ) =>
-                  //     transformCssClassName(
-                  //         context.resourcePath,
-                  //         localName
-                  //     )
+                  modules: true
               }
           }]
       }     

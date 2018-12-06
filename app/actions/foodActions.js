@@ -8,7 +8,7 @@ const getFoodItems = () => {
 			.then(response => response.json())
 			.then(foodItems => dispatch({
 				type: FETCH_FOOD.SUCCESS,
-				data: foodItems
+				data: foodItems.items
 			}))
 			.catch(error => dispatch({
 				type: FETCH_FOOD.ERROR,

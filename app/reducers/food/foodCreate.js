@@ -18,17 +18,17 @@ const foodCreate = handleActions({
 		...state,
 		foodCategories: action.data,
 		foodCategoriesAreLoading: false
-	}),
-	[FETCH_FOOD_ITEM.SUCCESS]: (state, action) => ({
-		...state,
-		foodItem: {
-			title: action.data.title,
-			description: action.data.description,
-			category: action.data.category._id,
-			subcategory: action.data.subcategory
-		},
-		foodItemIsLoading: false
 	})
+	// [FETCH_FOOD_ITEM.SUCCESS]: (state, action) => ({
+	// 	...state,
+	// 	foodItem: {
+	// 		title: action.data.title,
+	// 		description: action.data.description,
+	// 		category: action.data.category._id,
+	// 		subcategory: action.data.subcategory
+	// 	},
+	// 	foodItemIsLoading: false
+	// })
 }, initialState);
 
 export default foodCreate;

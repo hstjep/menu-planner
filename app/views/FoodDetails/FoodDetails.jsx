@@ -38,10 +38,10 @@ class FoodDetails extends PureComponent {
 					<dd>{foodItem.description}</dd>
 
 					<dt>Category</dt>
-					<dd>{foodItem.category.title}</dd>
+					<dd>{foodItem.foodCategory ? foodItem.foodCategory.title : ''}</dd>
 
 					<dt>Subcategory</dt>
-					<dd>{foodItem.subcategory}</dd>
+					<dd>{foodItem.foodSubcategory}</dd>
 
 					<dd><img src={foodItem.imageUrl} /></dd>
 				</dl>

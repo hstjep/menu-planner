@@ -17,7 +17,7 @@ class FoodCreateForm extends Component {
 			<Form onSubmit={handleSubmit} type="multipart/form-data" horizontal>
 				<Field name="title" component={FieldInput} type="text" value={foodItem.title} label="Title" />
 				<Field name="description" component={FieldInput} type="textarea" value={foodItem.description} label="Description" />
-				<Field name="foodCategory" component={SelectInput} type="select" value={foodItem.foodCategory} label="Category" data={foodCategories} selectedValue={foodItem.category} optionField="title" />
+				<Field name="foodCategory" component={SelectInput} type="select" value={foodItem.foodCategory} label="Category" data={foodCategories} optionField="title" />
 				<FormGroup>
 					<Col componentClass={ControlLabel} sm={2}>
 						<label>Subcategory</label>
@@ -50,7 +50,7 @@ class FoodCreateForm extends Component {
 
 export default reduxForm({
 	form: 'createFood',
-	fileds: ['title', 'description', 'file', 'foodCategory'],
+	fileds: ['title', 'description', 'file', 'foodCategory', 'foodSubCategory'],
 	enableReinitialize: true
 	// validate
 })(FoodCreateForm);
