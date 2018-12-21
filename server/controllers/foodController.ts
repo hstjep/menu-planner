@@ -1,4 +1,5 @@
 import foodService from '../services/foodService';
+import FilterOptions from '../common/models/FilterOptions';
 
 export default {
 	get: get,
@@ -10,12 +11,9 @@ export default {
 
 // Gets food.
 function get(req, res) {
-	const pageOptions = {
-		pageNumber: parseInt(req.query.pageNumber),
-		pageSize: parseInt(req.query.pageSize)
-	};
+	const filterOptions = new FilterOptions(req.params.page, req.params.pageSize, req.query.orderBy, req.query.orderDirection, req.query.embed);
 
-	foodService.get(pageOptions)
+	foodService.get(filterOptions)
 		.then(function(food) {
 			return res.json(food);
 		});

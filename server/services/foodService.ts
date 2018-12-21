@@ -1,4 +1,5 @@
 import Food from '../models/Food';
+import SearchResult from '../common/models/SearchResult';
 
 export default {
 	get: get,
@@ -9,23 +10,26 @@ export default {
 };
 
 // Gets food.
-function get(pageOptions) {
+function get(options) {
 	return new Promise(function (resolve, reject) {
+	
 		Food.find()
-			.populate('foodCategory')
-			.sort({ title: 'asc' })
-			.skip(pageOptions.pageSize * (pageOptions.pageNumber - 1))
-			.limit(pageOptions.pageSize)
+			.populate(...options.embed)
+			.sort({ [options.orderBy || 'title']: options.orderDirection })
+			.skip(options.pageSize * (options.page - 1))
+			.limit(options.pageSize)
 			.exec()
 			.then(function (foodItems) {
 				Food.count()
 					.exec()
 					.then(function (count) {
-						resolve({
-							items: foodItems,
-							currentPage: pageOptions.pageNumber,
-							totalPages: Math.ceil(count / pageOptions.pageSize)
-						})
+						resolve(
+							new SearchResult(
+								foodItems, 
+								count,
+								options.page, 
+								options.pageSize)
+						)
 					}, function (error) {
 						reject(error);
 					})

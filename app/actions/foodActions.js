@@ -4,11 +4,11 @@ const getFoodItems = () => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_FOOD.PENDING });
 
-		fetch('/api/food')
+		fetch('/api/food/1/100?embed=foodCategory')
 			.then(response => response.json())
-			.then(foodItems => dispatch({
+			.then(response => dispatch({
 				type: FETCH_FOOD.SUCCESS,
-				data: foodItems.items
+				data: response.items
 			}))
 			.catch(error => dispatch({
 				type: FETCH_FOOD.ERROR,
