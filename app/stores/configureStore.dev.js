@@ -1,17 +1,15 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk';
-import { createLogger } from 'redux-logger';
-import api from '../middleware/api';
 import rootReducer from '../reducers';
-import DevTools from '../containers/DevTools';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 
 const configureStore = preloadedState => {
   const store = createStore(
     rootReducer,
     preloadedState,
-    compose(
-      applyMiddleware(thunk, api, createLogger()),
-      DevTools.instrument()
+    composeWithDevTools(
+      applyMiddleware(thunk),
     )
   );
 
@@ -26,15 +24,3 @@ const configureStore = preloadedState => {
 }
 
 export default configureStore;
-
-
-//   compose(
-//   applyMiddleware(thunk),
-//   window.devToolsExtension ? window.devToolsExtensions() : f => f
-// )
-
-// if (process.env.NODE_ENV === 'production') {
-// 	module.exports = require('./configureStore.prod')
-//   } else {
-// 	module.exports = require('./configureStore.dev')
-//   }

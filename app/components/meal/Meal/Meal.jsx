@@ -52,7 +52,7 @@ class Meal extends React.Component {
             onClose={this.handleDeleteConfirmToggle}
             onConfirm={this.handleDeleteConfirm}
             item={item}
-            message={"Are you sure you want to delete " + item.mealType + "?"}
+            message={"Are you sure you want to delete " + item.title + "?"}
           />
         </td>
       </tr>

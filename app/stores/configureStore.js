@@ -1,9 +1,5 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import reducer from '../reducers';
-import { composeWithDevTools } from 'redux-devtools-extension';
-
-const store = createStore(
-	reducer, composeWithDevTools(
-	applyMiddleware(thunk)));
-export default store;
+if (process.env.NODE_ENV === 'production') {
+	module.exports = require('./configureStore.prod')
+} else {
+	module.exports = require('./configureStore.dev')
+}

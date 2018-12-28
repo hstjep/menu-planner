@@ -7,7 +7,8 @@ import MealList from 'components/meal/MealList';
 import { PageHeader, Button } from 'react-bootstrap';
 
 const mapStateToProps = (state) => {
-  const { meals, mealsAreLoading, isDeleteModalOpen } = state.meals;
+  const { meals, mealsAreLoading } = state.meals;
+  const { isDeleteModalOpen } = state.common;
 
   return {
     meals,

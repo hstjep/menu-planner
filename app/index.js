@@ -4,9 +4,11 @@ import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import store from './stores/configureStore';
+import configureStore from './stores/configureStore';
 
 const render = Component => {
+  const store = configureStore();
+
   ReactDOM.render(
     <BrowserRouter>
       <AppContainer>
