@@ -28,7 +28,8 @@ function get(options) {
 								foodItems, 
 								count,
 								options.page, 
-								options.pageSize)
+								options.pageSize,
+								options.embed)
 						)
 					}, function (error) {
 						reject(error);

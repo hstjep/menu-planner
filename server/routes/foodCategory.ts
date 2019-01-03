@@ -3,7 +3,7 @@ import foodCategoryCtrl from '../controllers/foodCategoryController';
 var router = express.Router();
 
 // GET food category.
-router.get('/', function (req: express.Request, res: express.Response) {
+router.get('/:page/:pageSize', function (req: express.Request, res: express.Response) {
 	return foodCategoryCtrl.get(req, res);
 });
 

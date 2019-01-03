@@ -37,5 +37,7 @@ export const DELETE_MENU_PLAN = defineAction('DELETE_MENU_PLAN', [PENDING, ERROR
 // Common
 export const TOGGLE_DELETE_CONFIRM = 'TOGGLE_DELETE_CONFIRM';
 
+// Pagination
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 

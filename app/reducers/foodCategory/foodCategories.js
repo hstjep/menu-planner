@@ -1,10 +1,12 @@
 import { handleActions, combineActions } from 'redux-actions';
 import { FETCH_FOOD_CATEGORIES, DELETE_FOOD_CATEGORY, TOGGLE_DELETE_CONFIRM } from './../../constants/actionTypes';
+import { setQueryOptions } from '../../actions/queryUtilityActions';
 
 const initialState = {
 		foodCategories: [],
 		foodCategoriesAreLoading: false,
-		isDeleteModalOpen: {}
+		isDeleteModalOpen: {},
+		queryOptions: setQueryOptions({page: 1, pageSize: 10 })
 };
 
 const foodCategories = handleActions({
@@ -15,7 +17,8 @@ const foodCategories = handleActions({
 	[FETCH_FOOD_CATEGORIES.SUCCESS]: (state, action) => ({
 		...state,
 		foodCategories: action.data,
-		foodCategoriesAreLoading: false
+		foodCategoriesAreLoading: false,
+		queryOptions: setQueryOptions(action.data)
 	}),
 	[FETCH_FOOD_CATEGORIES.ERROR]: (state) => ({
 		...state,

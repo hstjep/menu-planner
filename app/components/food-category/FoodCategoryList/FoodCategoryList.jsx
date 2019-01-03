@@ -39,7 +39,7 @@ FoodCategoryList.propTypes = {
       _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired
     }).isRequired
-  ).isRequired,
+  ),
   foodCategoriesAreLoading: PropTypes.bool.isRequired,
   handleDeleteConfirmToggle: PropTypes.func.isRequired,
   handleFoodCategoryDelete: PropTypes.func.isRequired,

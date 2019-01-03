@@ -1,4 +1,5 @@
 import Meal from '../models/Meal';
+import SearchResult from '../common/models/SearchResult';
 
 export default {
 	get: get,
@@ -9,19 +10,39 @@ export default {
 };
 
 // Gets meals.
-function get() {
-	var query = Meal.find()
-		.populate('food');
-
-	return query
-		.limit(12)
-		.exec();
+function get(options) {
+	return new Promise(function (resolve, reject) {
+		Meal.find()
+			.populate(...options.embed)
+			.sort({ [options.orderBy || 'title']: options.orderDirection })
+			.skip(options.pageSize * (options.page - 1))
+			.limit(options.pageSize)
+			.exec()
+			.then(function (meals) {
+				Meal.count()
+					.exec()
+					.then(function (count) {
+						resolve(
+							new SearchResult(
+								meals,
+								count,
+								options.page,
+								options.pageSize,
+								options.embed)
+						)
+					}, function (error) {
+						reject(error);
+					})
+			}, function (error) {
+				reject(error);
+			});
+	});
 }
 
 // Gets meal by id.
 function getById(id) {
 	return Meal.findById(id)
-		.populate('food')	
+		.populate('food')
 		.exec();
 }
 

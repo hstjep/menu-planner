@@ -1,4 +1,5 @@
 import mealService from '../services/mealService';
+import FilterOptions from '../common/models/FilterOptions';
 
 export default {
 	get: get,
@@ -10,7 +11,9 @@ export default {
 
 // Gets meals.
 function get(req, res) {
-	mealService.get()
+	const filterOptions = new FilterOptions(req.params.page, req.params.pageSize, req.query.orderBy, req.query.orderDirection, req.query.embed);
+
+	mealService.get(filterOptions)
 		.then(function(meal) {
 			return res.json(meal);
 		});

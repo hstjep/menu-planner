@@ -1,10 +1,10 @@
 import { FETCH_FOOD_CATEGORIES, FETCH_FOOD_CATEGORY, CREATE_FOOD_CATEGORY, UPDATE_FOOD_CATEGORY, DELETE_FOOD_CATEGORY } from './../constants/actionTypes';
 
-const getFoodCategories = () => {
+const getFoodCategories = (options) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_FOOD_CATEGORIES.PENDING });
 
-		fetch('/api/food-category')
+		fetch(`/api/food-category/${options.page}/${options.pageSize}?embed=${options.embed}`)
 			.then(response => response.json())
 			.then(foodCategories => dispatch({
 				type: FETCH_FOOD_CATEGORIES.SUCCESS,

@@ -1,14 +1,14 @@
 import { FETCH_FOOD, FETCH_FOOD_ITEM, CREATE_FOOD_ITEM, UPDATE_FOOD_ITEM, DELETE_FOOD_ITEM, SELECT_FOOD } from './../constants/actionTypes';
 
-const getFoodItems = () => {
+const getFoodItems = (options) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_FOOD.PENDING });
 
-		fetch('/api/food/1/100?embed=foodCategory')
+		fetch(`/api/food/${options.page}/${options.pageSize}?embed=${options.embed}`)
 			.then(response => response.json())
 			.then(response => dispatch({
 				type: FETCH_FOOD.SUCCESS,
-				data: response.items
+				data: response
 			}))
 			.catch(error => dispatch({
 				type: FETCH_FOOD.ERROR,

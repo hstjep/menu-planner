@@ -1,4 +1,4 @@
-import { handleActions, combineActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { FETCH_MEAL, SELECT_FOOD } from './../../constants/actionTypes';
 
 const initialState = {

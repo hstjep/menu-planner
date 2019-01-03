@@ -1,10 +1,11 @@
 import { handleActions } from 'redux-actions';
-import { FETCH_FOOD, DELETE_FOOD_ITEM, TOGGLE_DELETE_CONFIRM } from './../../constants/actionTypes';
+import { FETCH_FOOD, DELETE_FOOD_ITEM } from './../../constants/actionTypes';
+import { setQueryOptions } from '../../actions/queryUtilityActions';
 
 const initialState = {
 		foodItems: [],
 		foodItemsAreLoading: false,
-		isDeleteModalOpen: {}
+		queryOptions: setQueryOptions({page: 1, pageSize: 10, embed: 'foodCategory' })
 };
 
 const food = handleActions({
@@ -15,15 +16,12 @@ const food = handleActions({
 	[FETCH_FOOD.SUCCESS]: (state, action) => ({
 		...state,
 		foodItems: action.data,
-		foodItemsAreLoading: false
+		foodItemsAreLoading: false,
+		queryOptions: setQueryOptions(action.data)
 	}),
 	[FETCH_FOOD.ERROR]: (state) => ({
 		...state,
 		foodItemsAreLoading: false
-	}),
-	[TOGGLE_DELETE_CONFIRM] : (state, action) => ({
-		...state,
-		isDeleteModalOpen: { [action.value]: !state.isDeleteModalOpen[action.value]}
 	})
 }, initialState);
 

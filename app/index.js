@@ -6,9 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import configureStore from './stores/configureStore';
 
-const render = Component => {
-  const store = configureStore();
+const store = configureStore();
 
+const render = Component => {
   ReactDOM.render(
     <BrowserRouter>
       <AppContainer>

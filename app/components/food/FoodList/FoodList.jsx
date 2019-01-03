@@ -1,15 +1,14 @@
-import React, { Component } from 'react';  
+import React, { Component } from 'react';
 import FoodItem from 'components/food/FoodItem';
-import Loader from "components/common/Loader";
+import Loader from 'components/common/Loader';
 import { Table } from 'react-bootstrap';
-import styles from './foodList.css'; 
+import styles from './foodList.css';
+import Pager from 'components/common/Pager';
 
-class FoodList extends Component {
-  render() { 
-    const { foodItems, foodItemsAreLoading, handleDeleteConfirmToggle, handleFoodItemDelete, isDeleteModalOpen } = this.props;
-
+const FoodList = ({ foodItems, foodItemsAreLoading, handleDeleteConfirmToggle, handleFoodItemDelete, isDeleteModalOpen, handlePageChange }) => {
+  {
     if (foodItemsAreLoading) return <Loader />
-    if (!foodItems) return null;
+    if (!(foodItems)) return null;
 
     return (
       <div className={styles.section}>
@@ -22,15 +21,16 @@ class FoodList extends Component {
               <th></th>
             </tr>
           </thead>
-          <tbody>{foodItems.map(foodItem => <FoodItem 
-            key={foodItem._id} 
-            item={foodItem} 
+          <tbody>{foodItems.map(foodItem => <FoodItem
+            key={foodItem._id}
+            item={foodItem}
             isDeleteModalOpen={isDeleteModalOpen}
             handleDeleteConfirmToggle={handleDeleteConfirmToggle}
-            handleFoodItemDelete={handleFoodItemDelete} 
+            handleFoodItemDelete={handleFoodItemDelete}
+            handlePageChange={handlePageChange}
           />)}</tbody>
         </Table>
-    </div>)
+      </div>)
   }
 }
 

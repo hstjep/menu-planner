@@ -3,7 +3,7 @@ import mealCtrl from '../controllers/mealController';
 var router = express.Router();
 
 // GET meal.
-router.get('/', function (req: express.Request, res: express.Response) {
+router.get('/:page/:pageSize', function (req: express.Request, res: express.Response) {
 	return mealCtrl.get(req, res);
 });
 

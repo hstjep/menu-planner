@@ -1,4 +1,5 @@
 import FoodCategory from '../models/FoodCategory';
+import SearchResult from '../common/models/SearchResult';
 
 export default {
 	get: get,
@@ -9,13 +10,37 @@ export default {
 };
 
 // Gets food category.
-function get() {
-	var query = FoodCategory.find();
+function get(options) {
+	return new Promise(function (resolve, reject) {
 
-	return query.sort({ title: 'asc' })
-		.limit(12)
-		.exec();
+		FoodCategory.find()
+			.populate(...options.embed)
+			.sort({ [options.orderBy || 'title']: options.orderDirection })
+			.skip(options.pageSize * (options.page - 1))
+			.limit(options.pageSize)
+			.exec()
+			.then(function (foodItems) {
+				FoodCategory.count()
+					.exec()
+					.then(function (count) {
+						resolve(
+							new SearchResult(
+								foodItems,
+								count,
+								options.page,
+								options.pageSize,
+								options.embed)
+						)
+					}, function (error) {
+						reject(error);
+					})
+			}, function (error) {
+				reject(error);
+			});
+	});
 }
+
+
 
 // Gets food category by id.
 function getById(id) {

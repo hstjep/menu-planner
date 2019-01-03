@@ -1,17 +1,18 @@
 import { FETCH_MEALS, FETCH_MEAL, CREATE_MEAL, UPDATE_MEAL, DELETE_MEAL, SELECT_MEAL } from './../constants/actionTypes';
 
-const getMeals = () => {
+const getMeals = (options) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_MEALS.PENDING });
 
-		fetch('/api/meal')
+		fetch(`/api/meal/${options.page}/${options.pageSize}?embed=${options.embed}`)
 			.then(response => response.json())
 			.then(meals => dispatch({
 				type: FETCH_MEALS.SUCCESS,
 				data: meals
 			}))
 			.catch(error => dispatch({
-				type: FETCH_MEALS.ERROR
+				type: FETCH_MEALS.ERROR,
+				data: error
 			}))
 	}
 };

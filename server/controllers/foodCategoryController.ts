@@ -1,4 +1,5 @@
 import foodCategoryService from '../services/foodCategoryService';
+import FilterOptions from '../common/models/FilterOptions';
 
 export default {
 	get: get,
@@ -10,7 +11,9 @@ export default {
 
 // Gets food category.
 function get(req, res) {
-	foodCategoryService.get()
+	const filterOptions = new FilterOptions(req.params.page, req.params.pageSize, req.query.orderBy, req.query.orderDirection, req.query.embed);
+
+	foodCategoryService.get(filterOptions)
 		.then(function(food) {
 			return res.json(food);
 		});

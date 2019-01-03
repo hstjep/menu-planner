@@ -5,14 +5,17 @@ import { getFoodCategories, deleteFoodCategory } from "actions/foodCategoryActio
 import toggleDeleteConfirm from "actions/commonActions";
 import FoodCategoryList from 'components/food-category/FoodCategoryList';
 import { PageHeader, Button } from 'react-bootstrap';
+import withPagination from './../../helpers/withPagination';
+import queryString from 'query-string';
 
 const mapStateToProps = (state) => {
-  const { foodCategories, foodCategoriesAreLoading } = state.foodCategories;
+  const { foodCategories, foodCategoriesAreLoading, queryOptions } = state.foodCategories;
   const { isDeleteModalOpen } = state.common;
 
   return {
     foodCategories,
     foodCategoriesAreLoading,
+    queryOptions,
     isDeleteModalOpen
   }
 }
@@ -25,11 +28,13 @@ const mapDispatchToProps = dispatch => ({
 
 class FoodCategories extends PureComponent {
   componentDidMount() {
-    this.props.dispatch(getFoodCategories());
+    const params = queryString.parse(window.location.search);
+    this.props.dispatch(getFoodCategories({...this.props.queryOptions, ...params,  page: params.page || 1 }));
   }
 
   render() {
-    const match = this.props.match;
+    const { foodCategories, foodCategoriesAreLoading, handleDeleteConfirmToggle, handleFoodCategoryDelete, isDeleteModalOpen, match, queryOptions } = this.props;
+    const FoodCategoryListWithPagination = withPagination(FoodCategoryList, { ...queryOptions }, getFoodCategories);
 
     return (
       <div>
@@ -39,9 +44,12 @@ class FoodCategories extends PureComponent {
         <LinkContainer to={`${match.url}/create`}>
           <Button bsStyle="primary" bsSize="small"><span className="glyphicon glyphicon-plus" /> Create New</Button>
         </LinkContainer>
-        <FoodCategoryList
-          {...this.props}
-          handleFoodCategoryDelete={this.props.handleFoodCategoryDelete}
+        <FoodCategoryListWithPagination
+          foodCategoriesAreLoading={foodCategoriesAreLoading}
+          foodCategories={foodCategories.items}
+          handleDeleteConfirmToggle={handleDeleteConfirmToggle}
+          handleFoodCategoryDelete={handleFoodCategoryDelete}
+          isDeleteModalOpen={isDeleteModalOpen}
         />
       </div>
     );

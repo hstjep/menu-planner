@@ -5,14 +5,17 @@ import { getMeals, deleteMeal } from "actions/mealActions";
 import toggleDeleteConfirm from "actions/commonActions";
 import MealList from 'components/meal/MealList';
 import { PageHeader, Button } from 'react-bootstrap';
+import withPagination from './../../helpers/withPagination';
+import queryString from 'query-string';
 
 const mapStateToProps = (state) => {
-  const { meals, mealsAreLoading } = state.meals;
+  const { meals, mealsAreLoading, queryOptions } = state.meals;
   const { isDeleteModalOpen } = state.common;
 
   return {
     meals,
     mealsAreLoading,
+    queryOptions,
     isDeleteModalOpen
   }
 }
@@ -25,11 +28,13 @@ const mapDispatchToProps = dispatch => ({
 
 class Meals extends PureComponent {
   componentDidMount() {
-    this.props.dispatch(getMeals());
+    const params = queryString.parse(window.location.search);
+    this.props.dispatch(getMeals({...this.props.queryOptions, ...params,  page: params.page || 1 }));
   }
 
   render() {
-    const match = this.props.match;
+    const { meals, mealsAreLoading, handleDeleteConfirmToggle, handleMealDelete, isDeleteModalOpen, match, queryOptions } = this.props;
+    const MealListWithPagination = withPagination(MealList, { ...queryOptions }, getMeals);
 
     return (
       <div>
@@ -39,9 +44,12 @@ class Meals extends PureComponent {
         <LinkContainer to={`${match.url}/create`}>
           <Button bsStyle="primary" bsSize="small"><span className="glyphicon glyphicon-plus" /> Create New</Button>
         </LinkContainer>
-        <MealList
-          {...this.props}
-          handleMealDelete={this.props.handleMealDelete}
+        <MealListWithPagination
+          meals={meals.items}
+          mealsAreLoading={mealsAreLoading}
+          handleDeleteConfirmToggle={handleDeleteConfirmToggle}
+          handleMealDelete={handleMealDelete}
+          isDeleteModalOpen={isDeleteModalOpen}
         />
       </div>
     );
