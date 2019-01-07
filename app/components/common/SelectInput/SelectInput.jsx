@@ -4,6 +4,8 @@ import { Col, FormGroup, FormControl, ControlLabel, Label } from 'react-bootstra
 const SelectInput = ({ label, input, meta, type, placeholder, data, optionField, selectedValue }) => {
 	const { touched, error, warning } = meta;
 
+	if (!data) return null;
+
 	return (
 		<FormGroup controlId="formControlsSelect">
 			<Col componentClass={ControlLabel} sm={2}>

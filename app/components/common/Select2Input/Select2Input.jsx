@@ -1,18 +1,19 @@
 import React from "react";
 import { Col, FormGroup, FormControl, ControlLabel, Label } from 'react-bootstrap';
-import Select from 'react-select';
-import '!style-loader!css-loader!react-select/dist/react-select.css';
+import AsyncSelect from 'react-select/lib/Async';
 
-const Select2Input = ({ data, label, input, meta, type, placeholder, selectedValue }) => {
+const Select2Input = ({ data, label, input, meta, type, placeholder, loadOptions, inputValue, selectedValue, isMulti }) => {
 	const { touched, error, warning } = meta;
 
 	return (
-		<Col sm={4}>	
-			<Select
-				name="form-field-name"
+		<Col sm={4}>
+			<AsyncSelect
+				isMulti={isMulti}
+				cacheOptions
+				defaultOptions
+				loadOptions={loadOptions}
 				onChange={input.onChange}
-				multi={true}
-				value={selectedValue.map(item => {
+				defaultValue={selectedValue.map(item => {
 					if (item._id) {
 						return {
 							value: item._id,
@@ -20,14 +21,8 @@ const Select2Input = ({ data, label, input, meta, type, placeholder, selectedVal
 						}
 					}
 				})}
-				options={data.map(item => {
-					return {
-						value: item._id,
-						label: item.title
-					}
-				})}		
-			  />
-			  {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
+			/>
+			{touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))}
 		</Col>
 	)
 }

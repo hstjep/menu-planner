@@ -12,7 +12,7 @@ export default {
 // Gets meals.
 function get(options) {
 	return new Promise(function (resolve, reject) {
-		Meal.find()
+		Meal.find({ title: new RegExp(options.searchTerm, 'i') })
 			.populate(...options.embed)
 			.sort({ [options.orderBy || 'title']: options.orderDirection })
 			.skip(options.pageSize * (options.page - 1))
@@ -28,7 +28,8 @@ function get(options) {
 								count,
 								options.page,
 								options.pageSize,
-								options.embed)
+								options.embed,
+								options.searchTerm)
 						)
 					}, function (error) {
 						reject(error);

@@ -9,6 +9,7 @@ import FoodCreateForm from '../../components/food/FoodCreateForm';
 import { PageHeader, Button } from 'react-bootstrap';
 import { change } from 'redux-form';
 import { LinkContainer } from 'react-router-bootstrap';
+import { setQueryOptions } from './../../actions/queryUtilityActions';
 
 const mapStateToProps = (state) => {
 	const { foodItem, foodItemIsLoading } = state.foodItem;
@@ -20,9 +21,6 @@ const mapStateToProps = (state) => {
 		foodItemIsLoading,
 		foodCategories,
 		foodCategoriesAreLoading
-		// isDeleteModalOpen,
-		// foodCategories,
-		// foodCategoriesAreLoading
 	}
 }
 
@@ -42,7 +40,7 @@ class FoodCreate extends PureComponent {
 			this.props.dispatch(getFoodItem(id));
 		}
 
-		this.props.dispatch(getFoodCategories());	
+		this.props.dispatch(getFoodCategories(setQueryOptions({page: 1, pageSize: 1000 })));	
 	}
 
 	handleFileInputClear() {
@@ -92,7 +90,7 @@ class FoodCreate extends PureComponent {
 				<FoodCreateForm
 					foodItem={foodItem}
 					foodItemIsLoading={foodItemIsLoading}
-					foodCategories={foodCategories}
+					foodCategories={foodCategories.items}
 					foodCategoriesAreLoading={foodCategoriesAreLoading}
 					onSubmit={this.handleSubmit}
 					initialValues={initValues} />

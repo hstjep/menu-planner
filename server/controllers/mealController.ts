@@ -11,7 +11,7 @@ export default {
 
 // Gets meals.
 function get(req, res) {
-	const filterOptions = new FilterOptions(req.params.page, req.params.pageSize, req.query.orderBy, req.query.orderDirection, req.query.embed);
+	const filterOptions = new FilterOptions(req.params.page, req.params.pageSize, req.query.orderBy, req.query.orderDirection, req.query.embed, req.query.searchTerm);
 
 	mealService.get(filterOptions)
 		.then(function(meal) {

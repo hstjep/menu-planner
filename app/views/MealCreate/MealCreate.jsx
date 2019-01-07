@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import { browserHistory } from 'react-router';
 import { getMeal, createMeal, updateMeal } from "../../actions/mealActions";
-import { getFoodItems, selectFood } from "../../actions/foodActions";
+import { getFoodOptions, selectFood } from "../../actions/foodActions";
 import MealCreateForm from '../../components/meal/MealCreateForm';
 import { PageHeader, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { setQueryOptions } from './../../actions/queryUtilityActions';
 
 const mapStateToProps = (state) => {
 	const { meal, mealTypes, foodItems, mealIsLoading, isDeleteModalOpen } = state.meal;
@@ -40,19 +41,12 @@ class MealCreate extends PureComponent {
 		}
 	}
 
-	handleFoodChange = value => {
-		var values = [];
+	handleFoodOptions = value => {
+		return getFoodOptions(setQueryOptions({page: 1, pageSize: 10, searchTerm: value }));
+	}
 
-		Object.keys(value).forEach(function (prop) {
-			if (value[prop].value) {
-				values.push({
-					_id: value[prop].value,
-					title: value[prop].label
-				});
-			}
-		});
-		
-		this.props.dispatch(selectFood(values))
+	handleFoodChange = value => {
+		this.props.dispatch(selectFood(value))
 	}
 
 	handleSubmit = values => {
@@ -93,6 +87,7 @@ class MealCreate extends PureComponent {
 					mealTypes={mealTypes} 
 					foodItems={foodItems}
 					mealIsLoading={mealIsLoading}
+					handleFoodOptions={this.handleFoodOptions}
 					handleFoodChange={this.handleFoodChange}
 					onSubmit={this.handleSubmit} 
 					initialValues={initValues}

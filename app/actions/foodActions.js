@@ -1,4 +1,5 @@
 import { FETCH_FOOD, FETCH_FOOD_ITEM, CREATE_FOOD_ITEM, UPDATE_FOOD_ITEM, DELETE_FOOD_ITEM, SELECT_FOOD } from './../constants/actionTypes';
+import { setQueryOptions } from './queryUtilityActions';
 
 const getFoodItems = (options) => {
 	return (dispatch) => {
@@ -70,7 +71,7 @@ const updateFoodItem = (id, foodItem, callback) => {
 			body: JSON.stringify(foodItem)
 		})
 			.then(response => {
-				dispatch({ type: UPDATE_FOOD_ITEM.SUCCESS });				
+				dispatch({ type: UPDATE_FOOD_ITEM.SUCCESS });
 				callback()
 			})
 			.catch(error => dispatch({
@@ -79,7 +80,7 @@ const updateFoodItem = (id, foodItem, callback) => {
 	}
 };
 
-const deleteFoodItem = (id, updateStateCallback) => {
+const deleteFoodItem = (id) => {
 	return (dispatch) => {
 		// dispatch({ type: DELETE_FOOD_ITEM.PENDING });
 
@@ -87,8 +88,7 @@ const deleteFoodItem = (id, updateStateCallback) => {
 			method: 'DELETE'
 		})
 			.then(response =>
-				dispatch(getFoodItems())
-			// getFoodItems(updateStateCallback)
+				dispatch(getFoodItems({...setQueryOptions(), embed: 'foodCategory'}))
 			)
 			.catch(error =>
 				dispatch({ type: DELETE_FOOD_ITEM.ERROR })
@@ -96,8 +96,39 @@ const deleteFoodItem = (id, updateStateCallback) => {
 	}
 };
 
-const selectFood = value => ({
-	type: SELECT_FOOD,
-	data: value
-});
-export { getFoodItems, getFoodItem, createFoodItem, updateFoodItem, deleteFoodItem, selectFood };
+const getFoodOptions = options =>
+	new Promise(resolve => {
+		fetch(`/api/food/${options.page}/${options.pageSize}?embed=${options.embed}&searchTerm=${options.searchTerm}`)
+			.then(response => response.json())
+			.then(response => {
+				resolve(
+					response.items.map(function (item) {
+						return {
+							label: item.title,
+							value: item._id
+						}
+					})
+				);
+			});
+	});
+
+const selectFood = value => {
+	var values = value[0];
+	var data = [];
+
+	Object.keys(values).forEach(function (prop) {
+		if (values[prop].value) {
+			data.push({
+				_id: values[prop].value,
+				title: values[prop].label
+			});
+		}
+	});
+
+	return {
+		type: SELECT_FOOD,
+		data: data
+	}
+};
+
+export { getFoodItems, getFoodItem, createFoodItem, updateFoodItem, deleteFoodItem, getFoodOptions, selectFood };

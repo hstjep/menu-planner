@@ -6,26 +6,29 @@ import validationMessages from '../../../constants/validationMessages';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import FieldInput from '../../common/FieldInput';
-import SelectInput from '../../common/SelectInput';
-import FoodSelectInput from '../../common/FoodSelectInput';
+import Select2Input from '../../common/Select2Input';
 
 class MealCreateForm extends Component {
 	render() {
-		const { meal, mealTypes, mealIsLoading, handleFoodChange, handleSubmit } = this.props;
+		const { meal, mealTypes, mealIsLoading, handleFoodOptions, handleFoodChange, handleSubmit } = this.props;
 		if (mealIsLoading) return <Loader />
-	
-			return (
-				<Form onSubmit={handleSubmit} type="multipart/form-data" horizontal>
-					<Field name="title" component={FieldInput} type="text" value={meal.title} label="Title" />
-					{/* <Field name="mealType" component={SelectInput} type="select" value={meal.type} label="Type" data={mealTypes} selectedValue={meal.type} /> */}
-					<FoodSelectInput name="food" value={meal.food} selectedValue={meal.food} onChange={handleFoodChange}/>	
 
-					<FormGroup>
-						<Col smOffset={2} sm={10}>
-							<Button type="submit" bsStyle="primary" className={styles.btnCustom}>Save</Button>
-						</Col>
-					</FormGroup>
-				</Form>
+		return (
+			<Form onSubmit={handleSubmit} type="multipart/form-data" horizontal>
+				<Field name="title" component={FieldInput} type="text" value={meal.title} label="Title" />
+				<FormGroup>
+					<Col componentClass={ControlLabel} sm={2}>
+						<label>Food</label>
+					</Col>
+					<Field name="food" component={Select2Input} type="select" value={meal.food} label="Food" selectedValue={meal.food} loadOptions={handleFoodOptions} onChange={handleFoodChange} isMulti={true} />
+				</FormGroup>
+
+				<FormGroup>
+					<Col smOffset={2} sm={10}>
+						<Button type="submit" bsStyle="primary" className={styles.btnCustom}>Save</Button>
+					</Col>
+				</FormGroup>
+			</Form>
 		)
 	}
 }
@@ -33,14 +36,14 @@ class MealCreateForm extends Component {
 const validate = values => {
 	const errors = {};
 
-	// const maxLengthTitle = 50;
-	// if (values.type && values.title.length > maxLengthTitle) {
-	// 	errors.title = validationMessages.maxLength(maxLengthTitle);
-	// }
+	const maxLengthTitle = 50;
+	if (values.type && values.title.length > maxLengthTitle) {
+		errors.title = validationMessages.maxLength(maxLengthTitle);
+	}
 
-	// if (!values.title) {
-	// 	errors.title = validationMessages.required;
-	// }
+	if (!values.title) {
+		errors.title = validationMessages.required;
+	}
 
 	return errors
 }

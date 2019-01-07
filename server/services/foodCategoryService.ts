@@ -13,7 +13,7 @@ export default {
 function get(options) {
 	return new Promise(function (resolve, reject) {
 
-		FoodCategory.find()
+		FoodCategory.find({ title: new RegExp(options.searchTerm, 'i') })
 			.populate(...options.embed)
 			.sort({ [options.orderBy || 'title']: options.orderDirection })
 			.skip(options.pageSize * (options.page - 1))
@@ -29,7 +29,8 @@ function get(options) {
 								count,
 								options.page,
 								options.pageSize,
-								options.embed)
+								options.embed,
+								options.searchTerm)
 						)
 					}, function (error) {
 						reject(error);

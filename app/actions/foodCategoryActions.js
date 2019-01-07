@@ -1,4 +1,5 @@
 import { FETCH_FOOD_CATEGORIES, FETCH_FOOD_CATEGORY, CREATE_FOOD_CATEGORY, UPDATE_FOOD_CATEGORY, DELETE_FOOD_CATEGORY } from './../constants/actionTypes';
+import { setQueryOptions } from './queryUtilityActions';
 
 const getFoodCategories = (options) => {
 	return (dispatch) => {
@@ -73,7 +74,7 @@ const updateFoodCategory = (id, foodCategory, callback) => {
 	}
 };
 
-const deleteFoodCategory = (id, updateStateCallback) => {
+const deleteFoodCategory = (id) => {
 	return (dispatch) => {
 		// dispatch({ type: DELETE_FOOD_CATEGORY.PENDING });
 
@@ -81,7 +82,7 @@ const deleteFoodCategory = (id, updateStateCallback) => {
 			method: 'DELETE'
 		})
 			.then(response =>
-				dispatch(getFoodCategories())
+				dispatch(getFoodCategories(setQueryOptions()))
 			)
 			.catch(error =>
 				dispatch({ type: DELETE_FOOD_CATEGORY.ERROR })

@@ -16,8 +16,10 @@ const setQueryOptions = (data) => {
     return {
         page: params.page ? parseInt(params.page) : data.page,
         pageSize: data.pageSize || 10,
+        totalCount: data.totalCount,
         totalPages: data.totalPages,
-        embed: data.embed || ''
+        embed: data.embed || '',
+        searchTerm: data.searchTerm || ''
     }
 }
 

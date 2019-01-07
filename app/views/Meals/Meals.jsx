@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { getMeals, deleteMeal } from "actions/mealActions";
-import toggleDeleteConfirm from "actions/commonActions";
+import { toggleDeleteConfirm } from "actions/commonActions";
 import MealList from 'components/meal/MealList';
 import { PageHeader, Button } from 'react-bootstrap';
 import withPagination from './../../helpers/withPagination';

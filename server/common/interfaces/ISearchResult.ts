@@ -5,6 +5,7 @@ interface ISearchResult {
     pageSize: number;
     totalPages: number;
     embed: string;
+    searchTerm: string;
 }
 
 export default ISearchResult;

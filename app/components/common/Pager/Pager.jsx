@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
-import { Pagination } from 'react-bootstrap';
+import React from 'react';
+import Pagination from "react-js-pagination";
 
-const Pager = ({ totalPages, page, handlePageChange }) => {
+const Pager = ({ pageSize, totalCount, page, handlePageChange }) => {
     return (
         <Pagination
-            first={true}
-            last={true}
-            prev={true}
-            next={true}
-            bsSize="medium"
-            items={totalPages}
             activePage={page}
-            onSelect={handlePageChange}>
-        </Pagination>
+            itemsCountPerPage={pageSize}
+            totalItemsCount={totalCount}
+            pageRangeDisplayed={5}
+            onChange={handlePageChange}
+        />
     );
 }
-
 
 export default Pager;

@@ -19,7 +19,7 @@ function withPagination(WrappedComponent, pagingOptions, fetchingFuncion) {
             return (
                 <div>
                     <WrappedComponent {...this.props} />
-                    <Pager totalPages={pagingOptions.totalPages} page={pagingOptions.page} handlePageChange={this.handlePageChange} />
+                    <Pager pageSize={pagingOptions.pageSize} totalCount={pagingOptions.totalCount} page={pagingOptions.page} handlePageChange={this.handlePageChange} />
                 </div>
             )
         }

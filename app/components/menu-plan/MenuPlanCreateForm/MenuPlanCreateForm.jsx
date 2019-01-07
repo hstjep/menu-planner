@@ -6,17 +6,23 @@ import validationMessages from '../../../constants/validationMessages';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import FieldInput from '../../common/FieldInput';
-import MealSelectInput from '../../common/MealSelectInput';
+import Select2Input from '../../common/Select2Input';
 
 class MenuPlanCreateForm extends Component {
     render() {
-        const { menuPlan, isMenuPlanLoading, handleMealChange, handleSubmit } = this.props;
+        const { menuPlan, isMenuPlanLoading, handleMealOptions, handleMealChange, handleSubmit } = this.props;
         if (isMenuPlanLoading) return <Loader />
 
         return (
             <Form onSubmit={handleSubmit} type="multipart/form-data" horizontal>
-                <Field name="date" component={FieldInput} type="text" value={menuPlan.date} label="Date" disabled="true" />
-                <MealSelectInput name="meals" value={menuPlan.meals} selectedValue={menuPlan.meals} onChange={handleMealChange} />
+                <Field name="date" component={FieldInput} type="text" value={menuPlan.date} label="Date" disabled={true} />
+
+                <FormGroup>
+                    <Col componentClass={ControlLabel} sm={2}>
+                        <label>Meal</label>
+                    </Col>
+                    <Field name="meals" component={Select2Input} type="select" value={menuPlan.meals} label="Meal" selectedValue={menuPlan.meals} loadOptions={handleMealOptions} onChange={handleMealChange} isMulti={true} />
+                </FormGroup>
 
                 <FormGroup>
                     <Col smOffset={2} sm={10}>
