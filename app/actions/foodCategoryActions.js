@@ -1,11 +1,16 @@
 import { FETCH_FOOD_CATEGORIES, FETCH_FOOD_CATEGORY, CREATE_FOOD_CATEGORY, UPDATE_FOOD_CATEGORY, DELETE_FOOD_CATEGORY } from './../constants/actionTypes';
+import ApiClient from './../utils/apiClient';
 import { setQueryOptions } from './queryUtilityActions';
+
+const basePath = 'food-categories';
 
 const getFoodCategories = (options) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_FOOD_CATEGORIES.PENDING });
 
-		fetch(`/api/food-category/${options.page}/${options.pageSize}?embed=${options.embed}`)
+		ApiClient().find(`${basePath}/${options.page}/${options.pageSize}`, {
+			embed: options.embed
+		})
 			.then(response => response.json())
 			.then(foodCategories => dispatch({
 				type: FETCH_FOOD_CATEGORIES.SUCCESS,
@@ -21,7 +26,7 @@ const getFoodCategory = (id) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_FOOD_CATEGORY.PENDING });
 
-		fetch('/api/food-category/' + id)
+		ApiClient().get(`${basePath}/${id}`)
 			.then(response => response.json())
 			.then(foodCategory => dispatch({
 				type: FETCH_FOOD_CATEGORY.SUCCESS,
@@ -37,13 +42,7 @@ const createFoodCategory = (foodCategory, callback) => {
 	return (dispatch) => {
 		dispatch({ type: CREATE_FOOD_CATEGORY.PENDING });
 
-		fetch('/api/food-category', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(foodCategory)
-		})
+		ApiClient().create(basePath, foodCategory)
 			.then(response => {
 				callback()
 			})
@@ -57,15 +56,9 @@ const updateFoodCategory = (id, foodCategory, callback) => {
 	return (dispatch) => {
 		dispatch({ type: UPDATE_FOOD_CATEGORY.PENDING });
 
-		fetch('/api/food-category/' + id, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(foodCategory)
-		})
+		ApiClient().update(`${basePath}/${id}`, foodCategory)
 			.then(response => {
-				dispatch({ type: UPDATE_FOOD_CATEGORY.SUCCESS });				
+				dispatch({ type: UPDATE_FOOD_CATEGORY.SUCCESS });
 				callback()
 			})
 			.catch(error => dispatch({
@@ -78,9 +71,7 @@ const deleteFoodCategory = (id) => {
 	return (dispatch) => {
 		// dispatch({ type: DELETE_FOOD_CATEGORY.PENDING });
 
-		fetch('/api/food-category/' + id, {
-			method: 'DELETE'
-		})
+		ApiClient().remove(`${basePath}/${id}`)
 			.then(response =>
 				dispatch(getFoodCategories(setQueryOptions()))
 			)

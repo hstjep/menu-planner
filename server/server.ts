@@ -31,9 +31,9 @@ app.get("/api", (req, res) => {
 });
 
 app.use('/api/food', food);
-app.use('/api/food-category', foodCategory);
+app.use('/api/food-categories', foodCategory);
 app.use('/api/file', file);
-app.use('/api/meal', meal);
+app.use('/api/meals', meal);
 app.use('/api/menu', menu);
 
 export default app;

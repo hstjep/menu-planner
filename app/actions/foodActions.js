@@ -1,11 +1,16 @@
 import { FETCH_FOOD, FETCH_FOOD_ITEM, CREATE_FOOD_ITEM, UPDATE_FOOD_ITEM, DELETE_FOOD_ITEM, SELECT_FOOD } from './../constants/actionTypes';
+import ApiClient from './../utils/apiClient';
 import { setQueryOptions } from './queryUtilityActions';
+
+const basePath = 'food';
 
 const getFoodItems = (options) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_FOOD.PENDING });
 
-		fetch(`/api/food/${options.page}/${options.pageSize}?embed=${options.embed}`)
+		ApiClient().find(`${basePath}/${options.page}/${options.pageSize}`, {
+			embed: options.embed
+		})
 			.then(response => response.json())
 			.then(response => dispatch({
 				type: FETCH_FOOD.SUCCESS,
@@ -22,7 +27,7 @@ const getFoodItem = (id) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_FOOD_ITEM.PENDING });
 
-		fetch('/api/food/' + id)
+		ApiClient().get(`${basePath}/${id}`)
 			.then(response => response.json())
 			.then(foodItem => dispatch({
 				type: FETCH_FOOD_ITEM.SUCCESS,
@@ -42,13 +47,7 @@ const createFoodItem = (foodItem, callback) => {
 			foodItem.imageUrl = '/' + foodItem.imageUrl.replace(/\\/g, "/");
 		}
 
-		fetch('/api/food', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(foodItem)
-		})
+		ApiClient().create(basePath, foodItem)
 			.then(response => {
 				// dispatch({ type: CREATE_FOOD_ITEM.SUCCESS });
 				callback()
@@ -63,13 +62,7 @@ const updateFoodItem = (id, foodItem, callback) => {
 	return (dispatch) => {
 		dispatch({ type: UPDATE_FOOD_ITEM.PENDING });
 
-		fetch('/api/food/' + id, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(foodItem)
-		})
+		ApiClient().update(`${basePath}/${id}`, foodItem)
 			.then(response => {
 				dispatch({ type: UPDATE_FOOD_ITEM.SUCCESS });
 				callback()
@@ -84,11 +77,9 @@ const deleteFoodItem = (id) => {
 	return (dispatch) => {
 		// dispatch({ type: DELETE_FOOD_ITEM.PENDING });
 
-		fetch('/api/food/' + id, {
-			method: 'DELETE'
-		})
+		ApiClient().remove(`${basePath}/${id}`)
 			.then(response =>
-				dispatch(getFoodItems({...setQueryOptions(), embed: 'foodCategory'}))
+				dispatch(getFoodItems({ ...setQueryOptions(), embed: 'foodCategory' }))
 			)
 			.catch(error =>
 				dispatch({ type: DELETE_FOOD_ITEM.ERROR })
@@ -98,7 +89,11 @@ const deleteFoodItem = (id) => {
 
 const getFoodOptions = options =>
 	new Promise(resolve => {
-		fetch(`/api/food/${options.page}/${options.pageSize}?embed=${options.embed}&searchTerm=${options.searchTerm}`)
+
+		ApiClient().find(`${basePath}/${options.page}/${options.pageSize}`, {
+			embed: options.embed,
+			searchTerm: options.searchTerm
+		})
 			.then(response => response.json())
 			.then(response => {
 				resolve(

@@ -1,13 +1,18 @@
 import _ from 'underscore';
 import moment from 'moment';
-
 import { FETCH_MENU_PLANS, FETCH_WEEK_MENU_PLANS, CREATE_MENU_PLAN, UPDATE_MENU_PLAN, DELETE_MENU_PLAN, FETCH_MENU_PLAN } from './../constants/actionTypes';
+import ApiClient from './../utils/apiClient';
+
+const basePath = 'menu';
 
 const getMenuPlans = (filter) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_MENU_PLANS.PENDING });
 
-		fetch('/api/menu?startDate=2018-12-04T18:19:00.289Z&endDate=2018-12-05T18:19:00.289Z')
+		ApiClient().find(`${basePath}`, {
+			startDate: '2018-12-04T18:19:00.289Z',
+			endDate: '2018-12-05T18:19:00.289Z'
+		})
 			.then(response => response.json())
 			.then(menuPlans => {
 				dispatch({
@@ -26,7 +31,7 @@ const getMenuPlan = (id) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_MENU_PLAN.PENDING });
 
-		fetch('/api/menu/' + id)
+		ApiClient().get(`${basePath}/${id}`)
 			.then(response => response.json())
 			.then(meal => dispatch({
 				type: FETCH_MENU_PLAN.SUCCESS,
@@ -42,13 +47,7 @@ const createMenuPlan = (menuPlan, callback) => {
 	return (dispatch) => {
 		dispatch({ type: CREATE_MENU_PLAN.PENDING });
 
-		fetch('/api/menu-plan', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(menuPlan)
-		})
+		ApiClient().create(basePath, menuPlan)
 			.then(response => {
 				callback()
 			})
@@ -62,12 +61,13 @@ const getWeekMenuPlans = () => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_WEEK_MENU_PLANS.PENDING });
 
-		fetch('/api/menu/week')
+		ApiClient().find(`${basePath}/week`)
+		// fetch('/api/menu/week')
 			.then(response => response.json())
 			.then(menuPlans => {
 				var result = _.chain(menuPlans)
 					.groupBy(function (item) {
-						return moment(item.date).startOf('day').format('dddd DD/MM/YYYY');
+						return moment(item.date).local().startOf('day').format('dddd DD/MM/YYYY');
 					})
 					.map(function (value, index) {
 						return {
@@ -93,13 +93,7 @@ const updateMenuPlan = (id, menuPlan, callback) => {
 	return (dispatch) => {
 		dispatch({ type: UPDATE_MENU_PLAN.PENDING });
 
-		fetch('/api/menu/' + id, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(menuPlan)
-		})
+		ApiClient().update(`${basePath}/${id}`, menuPlan)
 			.then(response => {
 				dispatch({ type: UPDATE_MENU_PLAN.SUCCESS });
 				callback()
@@ -114,9 +108,7 @@ const deleteMenuPlan = (id, updateStateCallback) => {
 	return (dispatch) => {
 		// dispatch({ type: DELETE_MENU_PLAN.PENDING });
 
-		fetch('/api/menu-plan/' + id, {
-			method: 'DELETE'
-		})
+		ApiClient().remove(`${basePath}/${id}`)
 			.then(response =>
 				dispatch(getMenuPlans())
 			)

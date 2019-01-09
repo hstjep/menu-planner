@@ -39,10 +39,11 @@ function getById(id) {
 function getOrCreateCurrentWeekMenu() {
 	var query = Menu.find({
 		'date': {
-			'$gte': moment().day(0).utc(),
-			'$lt': moment().day(7).utc()
+			'$gte': moment().utc().day(1),
+			'$lt': moment().utc().day(8)
 		}
 	});
+
 	return new Promise(function (resolve, reject) {
 		query
 			.populate('meals')

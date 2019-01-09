@@ -1,11 +1,17 @@
 import { FETCH_MEALS, FETCH_MEAL, CREATE_MEAL, UPDATE_MEAL, DELETE_MEAL, SELECT_MEAL } from './../constants/actionTypes';
+import ApiClient from './../utils/apiClient';
 import { setQueryOptions } from './queryUtilityActions';
+
+const basePath = 'meals';
 
 const getMeals = (options) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_MEALS.PENDING });
 
-		fetch(`/api/meal/${options.page}/${options.pageSize}?embed=${options.embed}&searchTerm=${options.searchTerm}`)
+		ApiClient().find(`${basePath}/${options.page}/${options.pageSize}`, {
+			embed: options.embed,
+			searchTerm: options.searchTerm
+		})
 			.then(response => response.json())
 			.then(meals => dispatch({
 				type: FETCH_MEALS.SUCCESS,
@@ -22,7 +28,7 @@ const getMeal = (id) => {
 	return (dispatch) => {
 		dispatch({ type: FETCH_MEAL.PENDING });
 
-		fetch('/api/meal/' + id)
+		ApiClient().get(`${basePath}/${id}`)
 			.then(response => response.json())
 			.then(meal => dispatch({
 				type: FETCH_MEAL.SUCCESS,
@@ -38,13 +44,7 @@ const createMeal = (meal, callback) => {
 	return (dispatch) => {
 		dispatch({ type: CREATE_MEAL.PENDING });
 
-		fetch('/api/meal', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(meal)
-		})
+		ApiClient().create(basePath, meal)
 			.then(response => {
 				callback()
 			})
@@ -58,13 +58,7 @@ const updateMeal = (id, meal, callback) => {
 	return (dispatch) => {
 		dispatch({ type: UPDATE_MEAL.PENDING });
 
-		fetch('/api/meal/' + id, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(meal)
-		})
+		ApiClient().update(`${basePath}/${id}`, meal)
 			.then(response => {
 				dispatch({ type: UPDATE_MEAL.SUCCESS });
 				callback()
@@ -79,11 +73,9 @@ const deleteMeal = (id) => {
 	return (dispatch) => {
 		// dispatch({ type: DELETE_MEAL.PENDING });
 
-		fetch('/api/meal/' + id, {
-			method: 'DELETE'
-		})
+		ApiClient().remove(`${basePath}/${id}`)
 			.then(response =>
-				dispatch(getMeals({...setQueryOptions(), embed: 'food'}))
+				dispatch(getMeals({ ...setQueryOptions(), embed: 'food' }))
 			)
 			.catch(error =>
 				dispatch({ type: DELETE_MEAL.ERROR })
@@ -93,7 +85,10 @@ const deleteMeal = (id) => {
 
 const getMealOptions = options =>
 	new Promise(resolve => {
-		fetch(`/api/meal/${options.page}/${options.pageSize}?embed=${options.embed}&searchTerm=${options.searchTerm}`)
+		ApiClient().find(`${basePath}/${options.page}/${options.pageSize}`, {
+			embed: options.embed,
+			searchTerm: options.searchTerm
+		})
 			.then(response => response.json())
 			.then(response => {
 				resolve(
